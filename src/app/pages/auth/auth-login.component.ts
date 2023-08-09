@@ -35,8 +35,6 @@ export class LoginComponent implements OnInit {
 
         // reset alerts on submit
         //this.alertService.clear();
-
-        // stop here if form is invalid
         if (this.form.invalid) {
             return;
         }
@@ -53,8 +51,7 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: () => {
                     // valid registration navigate to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigateByUrl(returnUrl);
+                    this.router.navigateByUrl('movies');
                 },
                 error: error => {
                     //this.alertService.error(error);

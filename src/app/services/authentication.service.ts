@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
+import { ApiPaths } from './../helpers/api-paths';
 import { RegisterRequest, AuthenticationRequest, AuthenticationResponse } from "./../models/index";
 
 @Injectable({ providedIn: 'root' })
@@ -19,12 +20,18 @@ export class AuthenticationService {
         this.user = this.userSubject.asObservable();
     }
 
+    public get userValue() {
+        return this.userSubject.value;
+    }
+
     register(request: RegisterRequest): Observable<AuthenticationResponse> {
-        return this.http.post(`${environment.apiUrl}/auth/register`, request);
+        return this.http.post(`${environment.apiUrl}/${ApiPaths.Auth}/register`, request);
     }
 
     login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
-        return this.http.post<AuthenticationResponse>(`${environment.apiUrl}/auth/authenticate`, request)
+        return this.http.post<AuthenticationResponse>(
+            `${environment.apiUrl}/${ApiPaths.Auth}/authenticate`, 
+            request)
             .pipe(map(response => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(response));
@@ -37,8 +44,7 @@ export class AuthenticationService {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
         this.userSubject.next(null);
-        this.router.navigate(['/account/login']);
+        // redirect to login page
+        this.router.navigate(['/auth/login']);
     }
-
-    
 }

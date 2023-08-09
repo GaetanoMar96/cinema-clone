@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { RegisterRequest } from './../../models/index';
+import { RegisterRequest, Role } from './../../models/index';
 import { AuthenticationService } from './../../services/authentication.service';
 
 @Component({ 
@@ -28,12 +28,9 @@ export class RegistrationComponent implements OnInit {
         this.form = this.formBuilder.group({
             firstName: ['', Validators.required],
             lastName: ['', Validators.required],
-            email: ['', Validators.required, Validators.email],
-            password: ['', Validators.required]
+            email: ['', [Validators.required, Validators.email, this.validateEmail]],
+            password: ['', [Validators.required, this.validatePassword]]
         });
-        // add validation for email and password
-        this.f['email'].addValidators(this.validateEmail());
-        this.f['password'].addValidators(this.validatePassword());
     }
 
     // convenience getter for easy access to form fields
@@ -52,26 +49,30 @@ export class RegistrationComponent implements OnInit {
 
         this.loading = true;
 
-        const request: RegisterRequest = {
-            firstname: this.f['firstName'].value,
-            lastname: this.f['lastName'].value,
-            email: this.f['email'].value,
-            password: this.f['password'].value
-        }
-
+        const request: RegisterRequest = this.getRequest();
         this.authenticationService.register(request)
             .pipe(first())
             .subscribe({
                 next: () => {
                     // valid registration navigate to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigateByUrl(returnUrl);
+                    this.router.navigateByUrl('initial/login');
                 },
                 error: error => {
                     //this.alertService.error(error);
+                    console.log(error);
                     this.loading = false;
                 }
             });
+    }
+
+    private getRequest(): RegisterRequest {
+        return {
+            firstname: this.f['firstName'].value,
+            lastname: this.f['lastName'].value,
+            email: this.f['email'].value,
+            password: this.f['password'].value,
+            role: Role.USER
+        }
     }
 
     validatePassword(): ValidatorFn {
@@ -89,7 +90,7 @@ export class RegistrationComponent implements OnInit {
 
     validateEmail(): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
-            let emailRegExp = new RegExp('/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/');
+            let emailRegExp = new RegExp("/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i");
             if (!emailRegExp.test(control.value)) {
                 control.setErrors({error: 'Invalid email'});
                 return {error: 'Invalid email'}
