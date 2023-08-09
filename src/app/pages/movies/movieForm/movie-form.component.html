@@ -1,0 +1,66 @@
+<!-- Form -->
+<div class="container-fluid">
+    <div [hidden]="form.submitted">
+      <h2 class="text-align: center;">Add a new Movie</h2><br>
+      <form (ngSubmit)="form.onSubmit()" #movieForm="ngForm">
+          <div class="form-row">
+            <div class="form-group col-md-6">  
+              <label for="name">Title</label>
+              <input type="text" class="form-control" required
+                    [(ngModel)]="form.movie.title" name="title" #name="ngModel" placeholder="Movie title...">
+              <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                Title is required
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="name">Director</label>
+              <input type="text" class="form-control" required
+                    [(ngModel)]="form.movie.director" name="director" #name="ngModel" placeholder="Director...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="plot">Plot</label>
+            <textarea class="form-control" name="plot" rows="3" 
+            [(ngModel)]="form.movie.plot"></textarea>
+          </div>
+        
+          <div class="form-row">
+            <div class="form-group col-md-6">  
+              <label for="name">Runtime</label>
+              <input type="text" class="form-control"
+                    [(ngModel)]="form.movie.runtime" name="runtime" #name="ngModel">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputState">Genre</label>
+              <select [(ngModel)]="form.movie.genres">
+                <option *ngFor="let g of genresOptions" [ngValue]="g">{{g}}</option>
+              </select>
+
+              <select id="inputState" class="form-control">
+                <option selected>Choose a genre</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+          <br>
+        <div class="form-group">       
+            <div class="mb-4 d-flex justify-content-center">
+                <img src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                alt="example placeholder" style="width: 200px;" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="btn btn-primary btn-rounded">
+                    <label class="form-label text-white m-1" for="customFile1">Choose an Image</label>
+                    <input type="file" class="form-control d-none" id="customFile1" />
+                </div>
+            </div>
+        </div>
+
+        <button [routerLink]="'/movies'" type="button" class="btn btn-primary" (click)="addMovie(); movieForm.reset()">
+            Add Movie
+        </button>
+      </form>
+    </div>
+  </div>
+
+
