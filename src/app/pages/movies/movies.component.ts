@@ -7,10 +7,9 @@ import { Router, NavigationExtras } from '@angular/router';
 @Component({
     selector: 'app-movies',
     templateUrl: './movies.component.html', 
-    styleUrls: ['./movies.component.scss']
 })
-export class MoviesComponent implements OnInit, OnDestroy {
-    
+export class MoviesComponent  { //implements OnInit, OnDestroy
+    /*
     movies: Movie[] = [];
     subscription: Subscription = new Subscription();
 
@@ -59,6 +58,6 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe()
-    }
+    }*/
 
 }

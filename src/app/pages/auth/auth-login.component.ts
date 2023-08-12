@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: () => {
                     // valid registration navigate to home page
-                    this.router.navigateByUrl('movies');
+                    this.router.navigateByUrl('home');
                 },
                 error: error => {
                     //this.alertService.error(error);

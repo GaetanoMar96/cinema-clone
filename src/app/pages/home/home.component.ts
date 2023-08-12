@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-
 import { AuthenticationResponse } from './../../models/index';
 import { AuthenticationService } from './../../services/index';
-import {MatCardModule} from '@angular/material/card';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {

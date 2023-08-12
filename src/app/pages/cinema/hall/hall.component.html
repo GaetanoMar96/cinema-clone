@@ -1,0 +1,35 @@
+<div class="movie">
+    <h3>{{movieTitle}}</h3>
+    <div>{{hallNumber}} - {{dateTime}}</div>
+</div>
+
+<!-- Showing a static legend bar -->
+<ul class="showcase">
+    <li>
+        <div class="seat"></div>
+        <small>N/A</small>
+    </li>
+    <li>
+        <div class="seat selected"></div>
+        <small>Selected</small>
+    </li>
+    <li>
+        <div class="seat occupied"></div>
+        <small>Occupied</small>
+    </li>
+
+</ul>
+
+<div class="container">
+    <div class="screen"></div>
+    <!-- Generate the seating grid -->
+    <div *ngFor="let row of rows" style="margin-top:2%;margin-left:14%" class="justify-content-center">
+        <span class="seat" *ngFor="let col of cols" (click)="seatClicked(row + col)" [ngSwitch]="getStatus(row + col)"
+            style="margin-left:2%">
+            <span *ngSwitchCase="'selected'" class="selected"></span>
+            <span *ngSwitchCase="'reserved'" class="reserved"></span>
+            <span *ngSwitchDefault></span>
+        </span>
+    </div>
+
+</div>

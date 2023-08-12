@@ -3,28 +3,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MoviesComponent, HeaderComponent, MovieFormComponent, RegistrationComponent, LoginComponent
-  ,LayoutComponent, HomeComponent } from './pages/index';
+import { MoviesComponent, HeaderComponent, RegistrationComponent, LoginComponent
+  ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent } from './pages/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { JwtInterceptor, ErrorInterceptor} from './helpers/';
+import { AuthInterceptorService, ErrorInterceptorService } from './services/index';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
-
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MoviesComponent,
-    MovieFormComponent,
     HeaderComponent,
     RegistrationComponent,
     LoginComponent,
     LayoutComponent,
-    HomeComponent
+    HomeComponent,
+    CinemaMoviesComponent,
+    HallComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +41,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
   exports: [
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -10,7 +10,7 @@ import { RegisterRequest, AuthenticationRequest, AuthenticationResponse } from "
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private userSubject: BehaviorSubject<AuthenticationResponse | null>;
+    public userSubject: BehaviorSubject<AuthenticationResponse | null>;
     public user: Observable<AuthenticationResponse | null>;
 
     constructor(
@@ -35,6 +35,7 @@ export class AuthenticationService {
             .pipe(map(response => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(response));
+                console.log('WITH TOKEEEN' + response);
                 this.userSubject.next(response);
                 return response;
             }));

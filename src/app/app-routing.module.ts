@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MoviesComponent, MovieFormComponent, MovieDetailomponent, LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent } from './pages/index';
+import { MoviesComponent, LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent, CinemaMoviesComponent, HallComponent } from './pages/index';
 
 const appRoutes: Routes = [
   { path: 'auth', component: LayoutComponent,
@@ -10,10 +10,14 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'home', component: HomeComponent},
+  { path: 'cinema', component: CinemaMoviesComponent, 
+    children: [
+      { path: 'hall', component: HallComponent },
+  ]
+  },
   { path: 'movies', component: MoviesComponent, 
     children: [
-      { path: 'new-movie', component: MovieFormComponent },
-      { path: 'movie-detail', component: MovieDetailomponent},
+      
   ]
   },
   { path: '**', redirectTo: '' }

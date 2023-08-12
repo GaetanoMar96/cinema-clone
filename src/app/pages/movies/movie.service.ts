@@ -11,6 +11,7 @@ import * as movieJson from './../../models/mocked_data/movies/get.json' ;
 })
 export class MoviesService {
 
+    /*
     moviesListChanged = new Subject<Movie[]>();
     editing = new Subject<number>()
 
@@ -128,5 +129,5 @@ export class MoviesService {
       this.movies = this.moviesFiltered;
       return this.moviesFiltered.slice();
   }
-
+*/
 }
