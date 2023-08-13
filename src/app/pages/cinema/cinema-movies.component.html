@@ -1,28 +1,31 @@
-<div class="container-fluid">
-    <div class="col-8" *ngFor="let movie of movies; let i = index" style="display: inline-block">
-        <mat-grid-tile>
-            <div class="card-wrapper">
-                <mat-card class="example-card">
-                    <mat-card-header>
-                        <mat-card-title>{{movie.title}}</mat-card-title>
-                        <mat-card-subtitle>
-                            {{movie.genre}} - {{movie.year}}
-                        </mat-card-subtitle>
-                    </mat-card-header>
-                    <mat-card-content class="justify-content: center">
-                        <img mat-card-image style="width: 100px;" src="{{movie.poster}}">
-                        <p>
-                            {{movie.plot}}
-                        </p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-raised-button color="accent" (click)="onMovieInfo(movie.title)">INFO</button>
-                    </mat-card-actions>
-                </mat-card>
-            </div>
+<div *ngIf="movies.length > 0" class="container-fluid">
+    <mat-grid-list cols="2" rowHeight="fit" style="height: 800px;" gutterSize="30px">
+        <ng-container>
+        <mat-grid-tile *ngFor="let movie of movies; let i = index">
+            <mat-card style="height: 700;">
+                <mat-card-header>
+                    <mat-card-title>{{movie.title}}</mat-card-title>
+                    <mat-card-subtitle>
+                        {{movie.genre}} - {{movie.year}}
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content class="justify-content: center">
+                    <img mat-card-image style="width: 100px;" src="{{movie.poster}}">
+                    <p>
+                        {{movie.plot}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button color="accent" (click)="onMovieInfo(movie.title)">INFO</button>
+                </mat-card-actions>
+            </mat-card>
         </mat-grid-tile>
+    </ng-container>
+    </mat-grid-list>
     </div>
-</div>
+
+
+
 <div>
     <router-outlet></router-outlet>
     <!-- All children will be inserted here -->

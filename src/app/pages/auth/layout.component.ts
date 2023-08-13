@@ -9,9 +9,10 @@ export class LayoutComponent {
         private router: Router,
         private authenticationService: AuthenticationService
     ) {
-        // redirect to home if already logged in
-        if (this.authenticationService.userValue) {
-            this.router.navigate(['/home']);
-        }
+        // redirect to home if already logged in and token still valid
+        
+        //if (this.authenticationService.userValue) {
+        //    this.router.navigate(['/home']);
+        //}
     }
 }
