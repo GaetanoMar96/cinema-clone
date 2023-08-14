@@ -6,15 +6,15 @@
 <!-- Showing a static legend bar -->
 <ul class="showcase">
     <li>
-        <div class="seat"></div>
-        <small>N/A</small>
+        <div class="seat" style="background-color: #4d4c8f;"></div>
+        <small>Free</small>
     </li>
     <li>
         <div class="seat selected"></div>
         <small>Selected</small>
     </li>
     <li>
-        <div class="seat occupied"></div>
+        <div class="seat reserved"></div>
         <small>Occupied</small>
     </li>
 
@@ -26,9 +26,8 @@
     <div *ngFor="let row of rows" style="margin-top:2%;margin-left:14%" class="justify-content-center">
         <span class="seat" *ngFor="let col of cols" (click)="seatClicked(row + col)" [ngSwitch]="getStatus(row + col)"
             style="margin-left:2%">
-            <span *ngSwitchCase="'selected'" class="selected"></span>
-            <span *ngSwitchCase="'reserved'" class="reserved"></span>
-            <span *ngSwitchDefault></span>
+            <span *ngSwitchCase="'reserved'" class="seat reserved"></span>
+            <span *ngSwitchDefault class="seat free"></span>
         </span>
     </div>
 

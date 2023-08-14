@@ -1,0 +1,11 @@
+.movie-tile {
+    justify-content: flex-start !important;
+    &:hover{
+		transform: scale(1.02);
+		box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
+		transition: all 0.4s;
+	}
+}
+mat-card:hover  {
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}

@@ -13,5 +13,5 @@
 
 export interface Seat { 
     baseCost?: number;
-    availableSeats?: Array<number>;
+    availableSeats?: Array<string>;
 }

@@ -6,14 +6,35 @@
         class="collapse navbar-collapse"
         id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon>shopping_cart</mat-icon>
+              <span>Tickets</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link active" >Home</a>
+            <button mat-menu-item>
+              <mat-icon>home</mat-icon>
+              <a class="nav-link active" routerLink="/home">Home</a>
+            </button>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link active" routerLink="/movies">Movies</a>
+            <button mat-menu-item>
+              <a class="nav-link active" routerLink="/movies">Movies</a>
+            </button>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled">Cinema</a>
+            <button mat-menu-item>
+              <a class="nav-link active" routerLink="/cinema">Cinema</a>
+            </button>
           </li>
         </ul>
       </div>

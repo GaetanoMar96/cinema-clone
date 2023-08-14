@@ -44,6 +44,7 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
       this.goToMovieCard(movieInfo);
     }
 
+    console.log('AIO')
     if (movieName !== undefined) {
       this.cinemaService.getMovieInfo(movieName).subscribe({
         next: (movieInfo) => {

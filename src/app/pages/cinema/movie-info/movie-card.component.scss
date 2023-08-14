@@ -8,13 +8,13 @@
 	display: flex;
 	max-width: 770px;
 	border-radius: 10px;
-  transition: all 0.4s;
-  box-shadow: 0px 0px 120px -25px rgba(0,0,0, 0.5);
-  &:hover{
-    transform: scale(1.02);
-    box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
     transition: all 0.4s;
-  }
+    box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
+	&:hover{
+		transform: scale(1.02);
+		box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
+		transition: all 0.4s;
+	}
 }
 
 .card_left {
@@ -25,66 +25,63 @@
 	width: 90%;
 	padding: 30px;
 	margin-top: -25px;
+	h1 {
+		position: relative;
+		color: black;
+		font-size: 30px;
+		margin-top: 20px;
+		font-weight: 400;
+	}
+	.card_category {
+		width: 100%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+		.PG, .year, .genre, .time {
+			color: black;
+			padding: 10px;
+			font-weight: bold;
+			border-radius: 15px;
+		}
+	}
+	.plot {
+		color: black;
+		  font-weight: 100;
+		  line-height: 27px;
+	  }
 }
-.card_details  h1 {
-  color: black;
-	font-size: 30px;
-  margin-top: 20px;
-}
-.card_right img {
-	height: 390px;
-	border-radius: 2px;
-}
+
 .card_right {
 	border-radius: 2px;
+	img {
+		height: 390px;
+		border-radius: 2px;
+	}
 }
 
-.card_cat {
-	width: 100%;
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-pack: justify;
-	    -ms-flex-pack: justify;
-	        justify-content: space-between;
-}
-
-.PG, .year, .genre, .time {
-	color: black;
-	padding: 10px;
-	font-weight: bold;
-	border-radius: 15px;
-}
-
-.plot {
-  color: black;
-	font-weight: 100;
-	line-height: 27px;
-}
-
-.social-btn {
-	margin-left: -10px;
-}
 button {
 	color: #fff;
 	border: none;
 	padding: 20px;
+	width: 110px;
 	outline: none;
 	font-size: 12px;
 	margin-top: 30px;
 	margin-left: 10px;
-	background: #4e484770;
+	background: #110f0f5d;
 	border-radius: 12px;
 	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
-	        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
 	-webkit-transition: 300ms ease-in-out;
 	-o-transition: 200ms ease-in-out;
 	transition: 200ms ease-in-out;
-}
-
-button:hover {
-	-webkit-transform: scale(1.1);
-	    -ms-transform: scale(1.1);
-	        transform: scale(1.1);
+	&:hover {
+		-webkit-transform: scale(1.1);
+		-ms-transform: scale(1.1);
+		transform: scale(1.1);
+	}
 }
 

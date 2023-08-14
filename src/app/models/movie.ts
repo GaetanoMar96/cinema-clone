@@ -12,7 +12,7 @@
 
 
 export interface Movie { 
-    id?: string;
+    id?: number;
     title?: string;
     year?: string;
     rated?: string;

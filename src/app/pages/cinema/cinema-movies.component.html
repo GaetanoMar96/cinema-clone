@@ -1,7 +1,7 @@
 <div *ngIf="movies.length > 0" class="container-fluid">
     <mat-grid-list cols="2" rowHeight="fit" style="height: 800px;" gutterSize="30px">
-        <ng-container>
-        <mat-grid-tile *ngFor="let movie of movies; let i = index">
+        
+        <mat-grid-tile *ngFor="let movie of movies; let i = index" class="movie-tile">
             <mat-card style="height: 700;">
                 <mat-card-header>
                     <mat-card-title>{{movie.title}}</mat-card-title>
@@ -11,23 +11,15 @@
                 </mat-card-header>
                 <mat-card-content class="justify-content: center">
                     <img mat-card-image style="width: 300px;" src="{{movie.poster}}">
-                    <p>
+                    <p style="margin-top: 20px;">
                         {{movie.plot}}
                     </p>
                 </mat-card-content>
-                <mat-card-actions>
-                    <button mat-raised-button color="accent" (click)="onMovieInfo(movie.title)">INFO</button>
+                <mat-card-actions class="justify-content: center">
+                    <button mat-fab extended color="accent" (click)="onMovieInfo(movie.title)">INFO</button>
                 </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
-    </ng-container>
+        
     </mat-grid-list>
-    </div>
-
-
-<!--
-<div>
-    <router-outlet></router-outlet>
-     All children will be inserted here 
 </div>
--->

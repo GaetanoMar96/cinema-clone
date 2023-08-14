@@ -18,5 +18,5 @@ export interface ClientInfo {
     wallet?: number;
     idMovie?: number;
     ticketId?: number;
-    seat?: number;
+    seat?: string;
 }

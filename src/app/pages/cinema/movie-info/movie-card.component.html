@@ -3,27 +3,24 @@
     <div class="card_left">
       <div class="card_details">
         <h1>{{movie.title}}</h1>
-        <div class="card_cat">
+        <div class="card_category">
           <p class="PG">{{movie.rated}}</p>
           <p class="year">{{movie.year}}</p>
           <p class="genre">{{movie.genre}}</p>
           <p class="time">{{movie.runtime}}</p>
         </div>
         <p class="plot">{{movie.plot}}</p>
-        <div class="social-btn">
-          <!-- WATCH TRAILER-->
-          <button>
-            <i class="fas fa-play"></i> SEE TRAILER
+        <span *ngFor="let show of shows">
+          
+          <button (click)="getTicket(show)">
+            {{show.startDate}} {{show.startTime}}
           </button>
-          <!-- GET-->
-          <button>
-            <i class="fas fa-download"></i> PURCHASE TICKET
-          </button>
-        </div>
+        
+      </span>
       </div>
     </div>
     <div class="card_right">
-      <div class="img_container">
+      <div>
         <img src="{{movie.poster}}" alt="">
       </div>
     </div>

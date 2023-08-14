@@ -10,11 +10,15 @@ import { Movie, Show, Seat } from './../models/index';
 
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
+
   private movieName: string;
   private movies: Movie[] = [];
-  movie = new BehaviorSubject<Movie>({});
   private shows: Show[] = [];
 
+  movie = new BehaviorSubject<Movie>({});
+  show = new BehaviorSubject<Show>({});
+  seat = new BehaviorSubject<Seat>({});
+  
   constructor(private router: Router, private http: HttpClient) {
   }
 
@@ -69,6 +73,7 @@ export class CinemaService {
     date: string,
     time: string
   ): Observable<Seat> {
+    this.show.next({startDate: date, startTime: time});
     return this.http.get<Seat>(`${environment.apiUrl}/movie/seats/date/time`, {
       params: { movie: movie, date: date, time: time },
     });
