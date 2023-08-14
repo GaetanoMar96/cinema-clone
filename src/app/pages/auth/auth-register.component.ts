@@ -54,8 +54,8 @@ export class RegistrationComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    // valid registration navigate to home page
-                    this.router.navigateByUrl('initial/login');
+                    // valid registration navigate to log in form
+                    this.router.navigateByUrl('auth/login');
                 },
                 error: error => {
                     //this.alertService.error(error);

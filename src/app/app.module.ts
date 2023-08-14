@@ -4,7 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MoviesComponent, HeaderComponent, RegistrationComponent, LoginComponent
-  ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent } from './pages/index';
+  ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent, MovieCardComponent } from './pages/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +25,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     LayoutComponent,
     HomeComponent,
     CinemaMoviesComponent,
-    HallComponent
+    HallComponent,
+    MovieCardComponent
   ],
   imports: [
     BrowserModule,

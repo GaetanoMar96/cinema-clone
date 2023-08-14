@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="movie-card">
+    <div class="card_left">
+      <div class="card_details">
+        <h1>{{movie.title}}</h1>
+        <div class="card_cat">
+          <p class="PG">{{movie.rated}}</p>
+          <p class="year">{{movie.year}}</p>
+          <p class="genre">{{movie.genre}}</p>
+          <p class="time">{{movie.runtime}}</p>
+        </div>
+        <p class="plot">{{movie.plot}}</p>
+        <div class="social-btn">
+          <!-- WATCH TRAILER-->
+          <button>
+            <i class="fas fa-play"></i> SEE TRAILER
+          </button>
+          <!-- GET-->
+          <button>
+            <i class="fas fa-download"></i> PURCHASE TICKET
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card_right">
+      <div class="img_container">
+        <img src="{{movie.poster}}" alt="">
+      </div>
+    </div>
+  </div>
+</div>

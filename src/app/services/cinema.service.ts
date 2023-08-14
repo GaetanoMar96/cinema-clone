@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
@@ -12,9 +12,11 @@ import { Movie, Show, Seat } from './../models/index';
 export class CinemaService {
   private movieName: string;
   private movies: Movie[] = [];
+  movie = new BehaviorSubject<Movie>({});
   private shows: Show[] = [];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {
+  }
 
   getAllMovies(): Movie[] {
     if (this.movies && this.movies.length > 0) {

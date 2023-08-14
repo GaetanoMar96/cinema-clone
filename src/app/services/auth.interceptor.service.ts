@@ -10,8 +10,6 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add auth header with jwt if user is logged in
-        console.log(this.authenticationService.user)
-        console.log(this.authenticationService.userValue)
         return this.authenticationService.userSubject.pipe(
             take(1),
             exhaustMap(user => {
@@ -23,7 +21,6 @@ export class AuthInterceptorService implements HttpInterceptor {
                     'Authorization': `Bearer ${user.accessToken}`
                 }
               });
-              console.log(modifiedRequest);
               return next.handle(modifiedRequest);
             })
           );

@@ -47,4 +47,10 @@ export class AuthenticationService {
         // redirect to login page
         this.router.navigate(['/auth/login']);
     }
+
+    //utility method to check if token expired
+    tokenExpired(token: string): boolean {
+        const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;
+        return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    }
 }

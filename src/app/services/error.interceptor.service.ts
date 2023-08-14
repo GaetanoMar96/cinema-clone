@@ -13,8 +13,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
             if ([401, 403].includes(err.status) && this.authenticationService.userValue) {
                 // auto logout if 401 or 403 response returned from api
                 this.authenticationService.logout();
+            } else if (err.status === 500 && this.authenticationService.userValue) {
+                const token: string | undefined = this.authenticationService.userValue.accessToken;
+                if (token != undefined && this.authenticationService.tokenExpired(token)) {
+                    // auto logout if api returned 500 and token expired
+                    console.error(err);
+                    this.authenticationService.logout();
+                }
             }
-
+            
             const error = err.error?.message || err.statusText;
             console.error(err);
             return throwError(() => error);

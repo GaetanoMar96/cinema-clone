@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MoviesComponent, LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent, CinemaMoviesComponent, HallComponent } from './pages/index';
+import { MoviesComponent, LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent, CinemaMoviesComponent, HallComponent
+  , MovieCardComponent } from './pages/index';
 
 const appRoutes: Routes = [
   { path: 'auth', component: LayoutComponent,
@@ -10,11 +11,11 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'home', component: HomeComponent},
-  { path: 'cinema', component: CinemaMoviesComponent, 
-    children: [
-      { path: 'hall', component: HallComponent },
-  ]
-  },
+  { path: 'cinema', component: CinemaMoviesComponent },
+
+  { path: 'cinema/movie-card', component: MovieCardComponent },
+  { path: 'cinema/hall', component: HallComponent },
+  
   { path: 'movies', component: MoviesComponent, 
     children: [
       

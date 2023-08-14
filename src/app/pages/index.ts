@@ -5,4 +5,5 @@ export * from './auth/auth-register.component';
 export * from './auth/layout.component';
 export * from './home/home.component';
 export * from './cinema/cinema-movies.component';
+export * from './cinema/movie-info/movie-card.component';
 export * from './cinema/hall/hall.component';
