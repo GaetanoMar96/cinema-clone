@@ -1,0 +1,40 @@
+<div class="showcase">
+    <div class="showcase-content">
+        <div class="sign-form">
+            <h1>Sign In</h1>
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="info">
+                    <label class="form-label">Email</label>
+                    <input type="email" formControlName="email" class="form-control email" placeholder="Enter your email"
+                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <div *ngIf="f.email.errors.required">Email is required</div>
+                    </div>
+                </div>
+                <div class="info">
+                    <label class="form-label">Password</label>
+                    <input type="password" formControlName="password" class="form-control email" placeholder="Enter your password"
+                        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                        <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                </div>
+                <div>
+                    <button [disabled]="loading" class="btn btn-primary">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                        Sign In
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="signup">
+            <p>Don't have an account?
+                <a (click)="goToRegister()">Register now</a>
+            </p>
+        </div>
+
+    </div>
+</div>

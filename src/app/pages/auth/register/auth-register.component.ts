@@ -9,8 +9,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { RegisterRequest, Role } from './../../models/index';
-import { AuthenticationService } from './../../services/authentication.service';
+import { RegisterRequest, Role } from '../../../models/index';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   templateUrl: 'auth-register.component.html',

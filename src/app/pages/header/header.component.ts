@@ -11,6 +11,10 @@ export class HeaderComponent {
         
     }
 
+    goToAccount() {
+        //TODO
+    }
+
     logout() {
         this.authenticationService.logout();
     }

@@ -1,3 +1,65 @@
-.example-card {
-    max-width: 400px;
-}
+body {
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    display: flex;
+    font-family: "Roboto", sans-serif;
+  
+    background-color: rgba(8, 8, 8, 0.89);
+  }
+  
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    min-height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    align-self: center;
+  }
+
+  .main {
+    width: 100%;
+    margin-top: -100px;
+    background-size: cover;
+    align-items: center;
+    overflow-x: hidden;
+    justify-content: center;
+    display: flex;
+    background-position: center;
+    min-height: 710px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+  }
+  
+  .area {
+    color: white;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 70px;
+  }
+  
+  .area h2 {
+    font-size: 40px;
+    word-spacing: 15px;
+    line-height: 75px;
+  }
+  
+  .area h3 {
+    margin-top: -30px;
+    font-size: 27px;
+    font-weight: normal;
+  }
+  
+  
+  .example-button-row button,
+    .example-button-row a {
+    margin-right: 8px;
+    }

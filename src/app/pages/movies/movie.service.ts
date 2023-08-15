@@ -4,7 +4,7 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { catchError, filter, retry } from 'rxjs/operators';
 import { map } from "rxjs/operators";
 import { Movie } from "./../../models/index";
-import * as movieJson from './../../models/mocked_data/movies/get.json' ;
+//import * as movieJson from './../../models/mocked_data/movies/get.json' ;
 
 @Injectable({
     providedIn: 'root'

@@ -10,6 +10,10 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="goToAccount()">
+              <mat-icon>account_circle</mat-icon>
+              <span>Account</span>
+            </button>
             <button mat-menu-item>
               <mat-icon>shopping_cart</mat-icon>
               <span>Tickets</span>
