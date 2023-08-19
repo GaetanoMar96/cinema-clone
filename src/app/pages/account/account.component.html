@@ -1,0 +1,110 @@
+<!--<div class="container">
+    <div class="row">
+        <h2>Manage your account</h2>
+    </div>
+    <div class="row">
+        <div class="col-4">
+        <mat-form-field>
+            <mat-label>Insert your birthday</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <section class="example-section">
+            <mat-checkbox [(ngModel)]="isStudent" class="example-margin">Are you student?</mat-checkbox>
+          </section>
+        </div>
+          <div class="col-2">
+            <div class="example-button-container">
+                <button mat-raised-button color="warn" aria-label="Example icon button with a home icon" (click)="addUserInfo()">
+                Submit request
+            </button>
+            </div>
+          </div>
+    </div>
+
+    <mat-divider class="divider" [inset]="true"></mat-divider>
+
+
+    <div class="row">
+        <div class="col-6">
+        <mat-form-field floatLabel="always">
+            <mat-label>Amount</mat-label>
+            <input matInput type="number" class="example-right-align" placeholder="wallet" [(ngModel)]="wallet">
+            <span matTextPrefix>$&nbsp;</span>
+            <span matTextSuffix>.00</span>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+                <div class="example-button-container">
+                <button mat-raised-button color="warn" aria-label="Example icon button with a home icon" (click)="increaseWallet()">
+                    Increase wallet
+                </button>
+                </div>
+            </div>
+        </div>
+    
+</div>-->
+<div class="container">
+  <div class="row">
+      <div class="col-12">
+          <h2>Manage Your Account</h2>
+      </div>
+  </div>
+
+  <mat-divider class="divider" [inset]="true"></mat-divider>
+
+  <div class="row">
+      <div class="col-12 col-md-4">
+          <mat-form-field>
+              <mat-label>Insert Your Birthday</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-4">
+          <section class="example-section">
+              <mat-checkbox [(ngModel)]="isStudent" class="example-margin">Are You a Student?</mat-checkbox>
+          </section>
+      </div>
+
+      <div class="col-12 col-md-4">
+          <div class="example-button-container">
+              <button mat-raised-button color="warn"
+               aria-label="Example icon button with a home icon" 
+               (click)="addUserInfo()"
+               [disabled]="isButtonDisabled">
+                  Submit Request
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <mat-divider class="divider" [inset]="true"></mat-divider>
+
+  <div class="row">
+      <div class="col-12 col-md-6">
+          <mat-form-field floatLabel="always">
+              <mat-label>Amount</mat-label>
+              <input matInput type="number" class="example-right-align" placeholder="Wallet" [(ngModel)]="wallet">
+              <span matTextPrefix>$&nbsp;</span>
+              <span matTextSuffix>.00</span>
+          </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+          <div class="example-button-container">
+              <button mat-raised-button color="warn" aria-label="Example icon button with a home icon" (click)="increaseWallet()">
+                  Increase Wallet
+              </button>
+          </div>
+      </div>
+  </div>
+</div>

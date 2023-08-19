@@ -43,29 +43,28 @@ export class CinemaService {
 
   getMovieInfo(movie: string): Observable<Movie> {
     return this.http.get<Movie>(
-      `${environment.apiUrl}/${ApiPaths.Movies}/movie/info`,
-      { params: { movie: movie } }
+      `${environment.apiUrl}/${ApiPaths.Movies}/${movie}/info`
     );
   }
 
   getAllShowsForMovie(movie: string): Show[] {
     if (this.movieName === movie && this.shows.length > 0) {
+      console.log('no http for show')
       return this.shows.slice();
     } else {
       this.shows = [];
     }
-
+    console.log('recupero show')
     this.http
-      .get<Show[]>(`${environment.apiUrl}/movie/shows`, {
-        params: { movie: movie },
-      })
+      .get<Show[]>(`${environment.apiUrl}/${movie}/shows`)
       .subscribe({
         next: (shows: Show[]) => {
+          console.log(shows)
           shows.forEach((show) => this.shows.push(show));
         },
         error: (error) => console.log(error),
       });
-    return this.shows.slice();
+    return this.shows;
   }
 
   getAllSeatsForMovie(
@@ -74,8 +73,6 @@ export class CinemaService {
     time: string
   ): Observable<Seat> {
     this.show.next({startDate: date, startTime: time});
-    return this.http.get<Seat>(`${environment.apiUrl}/movie/seats/date/time`, {
-      params: { movie: movie, date: date, time: time },
-    });
+    return this.http.get<Seat>(`${environment.apiUrl}/${movie}/seats/${date}/${time}`);
   }
 }

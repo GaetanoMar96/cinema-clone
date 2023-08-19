@@ -4,3 +4,4 @@ export * from './ticket.service';
 export * from './transaction.service';
 export * from './auth.interceptor.service';
 export * from './error.interceptor.service';
+export * from './dialog.service';

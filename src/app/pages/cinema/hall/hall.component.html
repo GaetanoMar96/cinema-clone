@@ -1,34 +1,36 @@
-<div class="movie">
-    <h3>{{movieTitle}}</h3>
-    <div>{{hallNumber}} - {{dateTime}}</div>
-</div>
 
-<!-- Showing a static legend bar -->
-<ul class="showcase">
-    <li>
-        <div class="seat" style="background-color: #4d4c8f;"></div>
-        <small>Free</small>
-    </li>
-    <li>
-        <div class="seat selected"></div>
-        <small>Selected</small>
-    </li>
-    <li>
-        <div class="seat reserved"></div>
-        <small>Occupied</small>
-    </li>
-
-</ul>
-
-<div class="container">
-    <div class="screen"></div>
-    <!-- Generate the seating grid -->
-    <div *ngFor="let row of rows" style="margin-top:2%;margin-left:14%" class="justify-content-center">
-        <span class="seat" *ngFor="let col of cols" (click)="seatClicked(row + col)" [ngSwitch]="getStatus(row + col)"
-            style="margin-left:2%">
-            <span *ngSwitchCase="'reserved'" class="seat reserved"></span>
-            <span *ngSwitchDefault class="seat free"></span>
-        </span>
+<div class="theater">
+    <div class="movie-details">
+        <h2>{{movieTitle}}</h2>
+        <div>{{hallNumber}} - {{dateTime}}</div>
     </div>
 
+    <!-- Showing a static legend bar -->
+    <ul class="showcase">
+        <li>
+            <div class="seat" style="background-color: #b11919;"></div>
+            <small>Available</small>
+        </li>
+        <li>
+            <div class="seat selected"></div>
+            <small>Selected</small>
+        </li>
+        <li>
+            <div class="seat reserved"></div>
+            <small>Occupied</small>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="screen"></div>
+        <div class="seating-grid">
+            <div *ngFor="let row of rows" class="row">
+                <div *ngFor="let col of cols" class="seat" (click)="seatClicked(row + col)" 
+                [ngSwitch]="getStatus(row + col)">
+                <span *ngSwitchCase="'reserved'" class="seat reserved"></span>
+                <span *ngSwitchDefault class="seat available"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

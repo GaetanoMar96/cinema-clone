@@ -1,25 +1,44 @@
-<div *ngIf="movies.length > 0" class="container-fluid">
-    <mat-grid-list cols="2" rowHeight="fit" style="height: 800px;" gutterSize="30px">
-        
+<!--<div *ngIf="movies.length > 0" class="container-fluid">
+    <mat-grid-list cols="2" rowHeight="fit" style="height: 1600px;" gutterSize="30px">
         <mat-grid-tile *ngFor="let movie of movies; let i = index" class="movie-tile">
-            <mat-card style="height: 700;">
+            <mat-card class="movie-card">
                 <mat-card-header>
                     <mat-card-title>{{movie.title}}</mat-card-title>
                     <mat-card-subtitle>
                         {{movie.genre}} - {{movie.year}}
                     </mat-card-subtitle>
                 </mat-card-header>
-                <mat-card-content class="justify-content: center">
-                    <img mat-card-image style="width: 300px;" src="{{movie.poster}}">
-                    <p style="margin-top: 20px;">
+                <mat-card-content class="movie-card-content">
+                    <img mat-card-image class="movie-poster" src="{{movie.poster}}">
+                    <p class="movie-plot">
                         {{movie.plot}}
                     </p>
                 </mat-card-content>
-                <mat-card-actions class="justify-content: center">
+                <mat-card-actions class="movie-card-actions">
                     <button mat-fab extended color="accent" (click)="onMovieInfo(movie.title)">INFO</button>
                 </mat-card-actions>
             </mat-card>
         </mat-grid-tile>
-        
     </mat-grid-list>
+</div>-->
+<div *ngIf="movies.length > 0" class="container-fluid">
+    <div class="movie-grid">
+        <div *ngFor="let movie of movies; let i = index" class="movie-tile">
+            <div class="movie-card">
+                <div class="movie-header">
+                    <h2 class="movie-title">{{movie.title}}</h2>
+                    <p class="movie-subtitle">{{movie.genre}} - {{movie.year}}</p>
+                </div>
+                <div class="movie-content">
+                    <img class="movie-poster" src="{{movie.poster}}" alt="{{movie.title}} Poster">
+                    <p class="movie-plot">
+                        {{movie.plot}}
+                    </p>
+                </div>
+                <div class="movie-actions">
+                    <button class="info-button" (click)="onMovieInfo(movie.title)">INFO</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

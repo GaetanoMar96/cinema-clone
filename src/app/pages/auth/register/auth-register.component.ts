@@ -63,7 +63,7 @@ export class RegistrationComponent implements OnInit {
       .subscribe({
         next: () => {
           // valid registration navigate to log in form
-          this.router.navigateByUrl('auth/login');
+          this.router.navigate(['/auth/login']);
         },
         error: (error) => {
           //this.alertService.error(error);
@@ -75,10 +75,10 @@ export class RegistrationComponent implements OnInit {
 
   private getRequest(): RegisterRequest {
     return {
-      firstname: this.f['firstName'].value,
-      lastname: this.f['lastName'].value,
-      email: this.f['email'].value,
-      password: this.f['password'].value,
+      firstname: this.f.firstName.value,
+      lastname: this.f.lastName.value,
+      email: this.f.email.value,
+      password: this.f.password.value,
       role: Role.USER,
     };
   }

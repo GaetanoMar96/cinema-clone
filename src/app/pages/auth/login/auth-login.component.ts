@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
 
+  hide = true;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -44,8 +45,8 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     const request: AuthenticationRequest = {
-      email: this.f['email'].value,
-      password: this.f['password'].value,
+      email: this.f.email.value,
+      password: this.f.password.value,
     };
 
     this.authenticationService

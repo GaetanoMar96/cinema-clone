@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Movie, Show, Seat } from './../../../models/index';
 import { Subscription } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { CinemaService } from './../../../services/index';
 
 @Component({
@@ -16,7 +16,6 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   movieTitle: string;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private cinemaService: CinemaService,
     private router: Router
   ) {
@@ -29,7 +28,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     });
 
     if (this.movie.title) {
-      this.movieTitle = this.movie.title;
+      //this.movieTitle = this.movie.title;
       this.shows = [{
         startDate: '2023-08-14',
         startTime: '10:00'
@@ -48,11 +47,14 @@ export class MovieCardComponent implements OnInit, OnDestroy {
 
   getTicket(show: Show): void {
     if (show.startDate && show.startTime) {
-      this.cinemaService.getAllSeatsForMovie(this.movieTitle, show.startDate, show.startTime)
+      console.log(show.startTime)
+      //force startTime
+      const startTime = show.startTime.substring(0, show.startTime.length - 3)
+      this.cinemaService.getAllSeatsForMovie(this.movieTitle, show.startDate, startTime)
       .subscribe({
         next: (seat: Seat) => {
           this.cinemaService.seat.next(seat);
-          this.router.navigate(['/hall'])
+          this.router.navigate(['/cinema/hall'])
         },
         error: (error) => console.log(error),
       });

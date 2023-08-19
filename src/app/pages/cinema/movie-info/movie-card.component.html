@@ -10,12 +10,11 @@
           <p class="time">{{movie.runtime}}</p>
         </div>
         <p class="plot">{{movie.plot}}</p>
-        <span *ngFor="let show of shows">
-          
-          <button (click)="getTicket(show)">
+        <p class="show">Available shows:</p>
+        <span *ngFor="let show of shows">  
+          <button class="ticket-button" (click)="getTicket(show)">
             {{show.startDate}} {{show.startTime}}
           </button>
-        
       </span>
       </div>
     </div>

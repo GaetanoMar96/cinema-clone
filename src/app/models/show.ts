@@ -13,5 +13,5 @@
 
 export interface Show { 
     startDate?: string;
-    startTime?: any;
+    startTime?: string;
 }

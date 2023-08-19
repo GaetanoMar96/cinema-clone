@@ -1,7 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, CinemaService, TicketService, TransactionService } from './../../../services/index';
+import { AuthenticationService, CinemaService, TicketService } from './../../../services/index';
 import { AuthenticationResponse, ClientInfo, Movie, Seat } from './../../../models/index';
+import { DialogService } from './../../../services/index';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'movie-hall',
@@ -21,20 +23,21 @@ export class HallComponent implements OnInit, OnDestroy {
     hallNumber: string = 'Hall Number'; // i need it
     dateTime: string = 'Date Time';
 
-    reserved: Array<string> = [];
+    reserved: Array<string> = ['A1', 'A2', 'A3', 'A4', 'A5'];
+
 
     constructor(
         private authenticationService: AuthenticationService,
         private cinemaService: CinemaService,
         private ticketService: TicketService,
-        private transactionService: TransactionService,
-        private router: Router
+        private router: Router,
+        //private dialogService: DialogService
       ) {
     
       }
 
     ngOnInit(): void {
-        this.cinemaService.seat.subscribe(seat => {
+        /*this.cinemaService.seat.subscribe(seat => {
             this.seat = seat;
             if (seat.availableSeats)
                 this.reserved = seat.availableSeats;
@@ -50,7 +53,7 @@ export class HallComponent implements OnInit, OnDestroy {
 
         if (show) {
             this.dateTime = show.startDate + '-' + show.startTime;
-        }
+        }*/
     }
 
     //return status of each seat
@@ -58,50 +61,65 @@ export class HallComponent implements OnInit, OnDestroy {
         if(this.reserved.indexOf(seatPos) !== -1) {
             return 'reserved';
         } 
-        return 'free';
+        return 'available';
     }
 
     //purchase ticket
-    seatClicked(pos: string) {
-        //if base cost is > that wallet i need to increase it
-
-        //with log in i need the wallet
-
-        if (this.seat && this.seat.baseCost && this.seat.baseCost > 0) {
-            this.increaseWallet(this.seat?.baseCost)
+    seatClicked(pos: string): void {
+        //this.openDialogForAgeAndStudent();
+        
+        if (!this.user) { 
+            console.log('No user logged in');
+            this.router.navigate(['/auth/login']);
+            return;
+        } 
+        
+        /*if (this.user.age == undefined || this.user.isStudent == undefined ) {
+            //this.openDialogForAgeAndStudent();
+            return;
         }
+
+        if (this.seat && this.seat.baseCost) {
+            if (this.user.wallet && this.seat.baseCost > this.user.wallet) {
+                this.openDialogForWallet();
+                return;
+            }
+        }  */
         
         //add a form for age and is student
         let clientInfo: ClientInfo = {
             userId: this.user?.userId,
             idMovie: this.movie?.id,
-            seat: pos
+            seat: pos,
+            age: 33,//this.user?.age,
+            isStudent: true,//this.user?.isStudent,
+            wallet: 20//this.user?.wallet
         }
     
         this.ticketService.postMovieTicket(clientInfo)
-        .subscribe(
-            (error) => {
-                console.log(error)
-            }
+        .subscribe({
+            next: data => {
+                console.log('purchased!!!')
+                this.router.navigate(['cinema'])
+            },
+            error: error => console.log(error)
+        }
         )
     }
 
-    increaseWallet(amount: number) {
-        if (this.user?.userId) {
-            this.transactionService.putTransaction(
-                this.user?.userId,
-                amount
-            )
-        }
+    openDialogForAgeAndStudent() {
+        console.log('age!!!')
+        //this.dialogService.open()
     }
 
-    callFormForAgeAndStudent() {
-
+    openDialogForWallet() {
+        console.log('wallet increase!!!')
+        //this.dialogService.open()
     }
     
     ngOnDestroy(): void {
-        this.cinemaService.movie.unsubscribe();
-        this.cinemaService.seat.unsubscribe();
-        this.cinemaService.show.unsubscribe();
+        //this.cinemaService.movie.unsubscribe();
+        //this.cinemaService.seat.unsubscribe();
+        //this.cinemaService.show.unsubscribe();
     }
 }

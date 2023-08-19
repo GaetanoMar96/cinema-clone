@@ -7,6 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 @Component({
   selector: 'cinema-movies',
   templateUrl: './cinema-movies.component.html',
+  styleUrls: ['./cinema-movies.component.scss']
 })
 export class CinemaMoviesComponent implements OnInit, OnDestroy {
   movies: Movie[] = [];
@@ -44,7 +45,6 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
       this.goToMovieCard(movieInfo);
     }
 
-    console.log('AIO')
     if (movieName !== undefined) {
       this.cinemaService.getMovieInfo(movieName).subscribe({
         next: (movieInfo) => {
@@ -56,16 +56,7 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   goToMovieCard(movieInfo: Movie): void {
-
     this.cinemaService.movie.next(movieInfo);
-    
-    /*let navigationExtras: NavigationExtras = {
-      queryParams: {
-        movie: movieInfo,
-      },
-      skipLocationChange: true,
-    };*/
-
     this.router.navigate(['/cinema/movie-card']);
   }
 

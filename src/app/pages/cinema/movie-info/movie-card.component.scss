@@ -1,5 +1,16 @@
+.wrapper {
+	display: flex;
+    flex-wrap: wrap;
+    padding: 20px; /* Add some padding to the grid */
+    border-radius: 10px; /* Add rounded corners to the background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the background */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+	background-size: cover;
+}
+
 .movie-card {
-	color: #fff;
+	background-color: rgb(243, 240, 240);
 	width: 760px;
 	height: 390px;
 	margin: 50px auto;
@@ -9,12 +20,12 @@
 	max-width: 770px;
 	border-radius: 10px;
     transition: all 0.4s;
-    box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
-	&:hover{
-		transform: scale(1.02);
-		box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
-		transition: all 0.4s;
-	}
+    //box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
+	//&:hover{
+	//	transform: scale(1.02);
+	//	box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
+	//	transition: all 0.4s;
+	//}
 }
 
 .card_left {
@@ -49,9 +60,13 @@
 	}
 	.plot {
 		color: black;
-		  font-weight: 100;
-		  line-height: 27px;
-	  }
+		font-weight: 100;
+		line-height: 27px;
+	}
+	.show {
+		color: black;
+		font-weight: 500;
+	}
 }
 
 .card_right {
@@ -62,16 +77,17 @@
 	}
 }
 
-button {
-	color: #fff;
+.ticket-button {
+	color: black;
 	border: none;
 	padding: 20px;
 	width: 110px;
 	outline: none;
 	font-size: 12px;
+	font-weight: bold;
 	margin-top: 30px;
 	margin-left: 10px;
-	background: #110f0f5d;
+	background: #ffd740;
 	border-radius: 12px;
 	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
 	box-shadow: 0 0 20px rgba(0,0,0,0.2);
@@ -82,6 +98,8 @@ button {
 		-webkit-transform: scale(1.1);
 		-ms-transform: scale(1.1);
 		transform: scale(1.1);
+		background-color: #eb8e23;
 	}
 }
+
 

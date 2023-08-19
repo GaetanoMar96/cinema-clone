@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-
+import { map } from 'rxjs/operators';
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
 import { RegisterRequest, AuthenticationRequest, AuthenticationResponse } from "./../models/index";
@@ -40,12 +39,29 @@ export class AuthenticationService {
             }));
     }
 
-    logout() {
+    logout(): void {
+        // remove user from session context
+        this.http.post<any>(
+            `${environment.apiUrl}/${ApiPaths.Auth}/logout`, "")
+
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
         this.userSubject.next(null);
         // redirect to login page
         this.router.navigate(['/auth/login']);
+    }
+
+    updateUser(age: number, isStudent: boolean) {
+        const userId = this.userValue?.userId;
+        if (this.userValue) {
+            this.userValue.age = age;
+            this.userValue.isStudent = isStudent;
+        }
+
+        this.http.patch(
+            `${environment.apiUrl}/${ApiPaths.Auth}/update/${userId}/${age}/${isStudent}`, 
+            "" //no body
+        );
     }
 
     //utility method to check if token expired
