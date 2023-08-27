@@ -10,12 +10,14 @@ export class HeaderComponent {
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService) {
-        
-    }
+        private authenticationService: AuthenticationService) {}
 
     goToAccount() {
         this.router.navigate(['./account'])
+    }
+
+    goToTickets() {
+        this.router.navigate(['./tickets'])
     }
 
     logout() {

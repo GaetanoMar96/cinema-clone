@@ -8,7 +8,7 @@
     <!-- Showing a static legend bar -->
     <ul class="showcase">
         <li>
-            <div class="seat" style="background-color: #b11919;"></div>
+            <div class="seat" style="background-color: #dbd6d6;"></div>
             <small>Available</small>
         </li>
         <li>
@@ -27,10 +27,16 @@
             <div *ngFor="let row of rows" class="row">
                 <div *ngFor="let col of cols" class="seat" (click)="seatClicked(row + col)" 
                 [ngSwitch]="getStatus(row + col)">
+                <span class="seat-label">{{row}}{{col}}</span>
                 <span *ngSwitchCase="'reserved'" class="seat reserved"></span>
+                <span *ngSwitchCase="'selected'" class="seat selected"></span>
                 <span *ngSwitchDefault class="seat available"></span>
                 </div>
             </div>
         </div>
     </div>
+
+    <button [disabled]="seatsEmpty()" class="ticket-button" (click)="purchaseTicket()" >
+        Purchase
+    </button>
 </div>

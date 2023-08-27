@@ -1,7 +1,6 @@
 export * from './authenticationRequest';
 export * from './authenticationResponse';
 export * from './clientInfo';
-export * from './movie_old';
 export * from './registerRequest';
 export * from './role';
 export * from './seat';

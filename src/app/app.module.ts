@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MoviesComponent, HeaderComponent, RegistrationComponent, LoginComponent
   ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent,
-   MovieCardComponent, AccountComponent, DialogComponent } from './pages/index';
+   MovieCardComponent, AccountComponent, DialogComponent, TicketsComponent } from './pages/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,8 +20,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatDividerModule } from '@angular/material/divider';
-import { MatDialogModule, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,8 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA } from '@angular/material/d
     HallComponent,
     MovieCardComponent,
     AccountComponent,
-    DialogComponent
+    DialogComponent,
+    TicketsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,9 +65,7 @@ import { MatDialogModule, MatDialog, MAT_DIALOG_DATA } from '@angular/material/d
   providers: [
     MatDatepickerModule,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
-    {provide: MatDialog, useValue: {}},
-    {provide: MAT_DIALOG_DATA, useValue: []},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

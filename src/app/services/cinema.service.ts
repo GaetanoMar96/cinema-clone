@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject  } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
@@ -11,23 +11,30 @@ import { Movie, Show, Seat } from './../models/index';
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
 
-  private movieName: string;
+  movieName: string = 'Movie';
   private movies: Movie[] = [];
   private shows: Show[] = [];
 
-  movie = new BehaviorSubject<Movie>({});
-  show = new BehaviorSubject<Show>({});
-  seat = new BehaviorSubject<Seat>({});
+  //Subjects
+  selectedMovieSubject = new BehaviorSubject<Movie>({});
+  selectedShowSubject = new ReplaySubject<Show>();
+  selectedSeatSubject = new ReplaySubject<Seat>();
   
-  constructor(private router: Router, private http: HttpClient) {
+  //As observables
+  selectedMovie$: Observable<Movie> = this.selectedMovieSubject.asObservable();
+  selectedShow$: Observable<Show> = this.selectedShowSubject.asObservable();
+  selectedSeat$: Observable<Seat> = this.selectedSeatSubject.asObservable();
+
+  constructor(private http: HttpClient) {
   }
 
   getAllMovies(): Movie[] {
     if (this.movies && this.movies.length > 0) {
       return this.movies.slice();
+    } else {
+      this.getAvailableMoviesList();
+      return this.movies;
     }
-    this.getAvailableMoviesList();
-    return this.movies;
   }
 
   getAvailableMoviesList(): void {
@@ -35,6 +42,7 @@ export class CinemaService {
       .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}`)
       .subscribe({
         next: (movies: Movie[]) => {
+          console.log('movies get from api success')
           movies.forEach((movie) => this.movies.push(movie));
         },
         error: (error) => console.log(error),
@@ -49,17 +57,15 @@ export class CinemaService {
 
   getAllShowsForMovie(movie: string): Show[] {
     if (this.movieName === movie && this.shows.length > 0) {
-      console.log('no http for show')
       return this.shows.slice();
     } else {
       this.shows = [];
     }
-    console.log('recupero show')
+    
     this.http
       .get<Show[]>(`${environment.apiUrl}/${movie}/shows`)
       .subscribe({
         next: (shows: Show[]) => {
-          console.log(shows)
           shows.forEach((show) => this.shows.push(show));
         },
         error: (error) => console.log(error),
@@ -72,7 +78,6 @@ export class CinemaService {
     date: string,
     time: string
   ): Observable<Seat> {
-    this.show.next({startDate: date, startTime: time});
     return this.http.get<Seat>(`${environment.apiUrl}/${movie}/seats/${date}/${time}`);
   }
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, CinemaService, TicketService } from './../../../services/index';
-import { AuthenticationResponse, ClientInfo, Movie, Seat } from './../../../models/index';
+import { AuthenticationResponse, ClientInfo, Movie, Show, Seat } from './../../../models/index';
 import { DialogService } from './../../../services/index';
-import { DialogComponent } from './dialog/dialog.component';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Ticket } from '../../../helpers/index';
 
 @Component({
   selector: 'movie-hall',
@@ -13,8 +15,9 @@ import { DialogComponent } from './dialog/dialog.component';
 export class HallComponent implements OnInit, OnDestroy {
     
     private user: AuthenticationResponse | null;
-    private movie: Movie | null;
-    private seat: Seat | null;
+    movie: Movie;
+    show: Show;
+    seat: Seat;
 
     rows: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     cols: number[]  = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -23,83 +26,109 @@ export class HallComponent implements OnInit, OnDestroy {
     hallNumber: string = 'Hall Number'; // i need it
     dateTime: string = 'Date Time';
 
-    reserved: Array<string> = ['A1', 'A2', 'A3', 'A4', 'A5'];
+    available: Array<string> = [];
+    reserved: Array<string> = [];
+    selected: Array<string> = [];
 
+    private destroy$ = new Subject<void>(); // Subject for unsubscribing
 
     constructor(
         private authenticationService: AuthenticationService,
         private cinemaService: CinemaService,
         private ticketService: TicketService,
         private router: Router,
-        //private dialogService: DialogService
+        private dialogService: DialogService
       ) {
     
       }
 
     ngOnInit(): void {
-        /*this.cinemaService.seat.subscribe(seat => {
+        this.user = this.authenticationService.userValue;
+
+        this.cinemaService.selectedMovie$.subscribe(
+            movie => this.movie = movie
+        );
+
+        this.cinemaService.selectedSeat$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(seat => {
             this.seat = seat;
             if (seat.availableSeats)
-                this.reserved = seat.availableSeats;
+                this.available = seat.availableSeats;
         });
 
-        this.user = this.authenticationService.userValue;
-        this.movie = this.cinemaService.movie.value;
+        this.cinemaService.selectedShow$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+            show => this.show = show
+        );
         
-        const show = this.cinemaService.show.value;
         if (this.movie.title) {
             this.movieTitle = this.movie.title;
         }
 
-        if (show) {
-            this.dateTime = show.startDate + '-' + show.startTime;
-        }*/
+        if (this.show) {
+            this.dateTime = this.show.startDate + '-' + this.show.startTime;
+        }
     }
 
     //return status of each seat
     getStatus(seatPos: string): string {
-        if(this.reserved.indexOf(seatPos) !== -1) {
-            return 'reserved';
+        if (this.selected.indexOf(seatPos) !== -1) {
+            return 'selected';
+        } else if(this.available.indexOf(seatPos) !== -1) {
+            return 'available';
         } 
-        return 'available';
+        return 'reserved';
+    }
+
+    seatsEmpty() {
+        return this.selected.length === 0;
+    }
+
+    //Store all the selected seats
+    seatClicked(pos: string) {
+        this.selected.push(pos);
     }
 
     //purchase ticket
-    seatClicked(pos: string): void {
-        //this.openDialogForAgeAndStudent();
-        
+    purchaseTicket(): void {
         if (!this.user) { 
             console.log('No user logged in');
             this.router.navigate(['/auth/login']);
             return;
         } 
         
-        /*if (this.user.age == undefined || this.user.isStudent == undefined ) {
-            //this.openDialogForAgeAndStudent();
+        if (this.user.age == undefined || this.user.isStudent == undefined ) {
+            console.log('age problem');
+            this.openDialogForAgeAndStudent();
             return;
         }
 
         if (this.seat && this.seat.baseCost) {
             if (this.user.wallet && this.seat.baseCost > this.user.wallet) {
+                console.log('wallet problem');
+                console.log(this.user.wallet);
                 this.openDialogForWallet();
                 return;
             }
-        }  */
+        } 
         
-        //add a form for age and is student
         let clientInfo: ClientInfo = {
             userId: this.user?.userId,
             idMovie: this.movie?.id,
-            seat: pos,
-            age: 33,//this.user?.age,
+            age: 23,//this.user?.age,
             isStudent: true,//this.user?.isStudent,
-            wallet: 20//this.user?.wallet
+            wallet: 20,//this.user?.wallet,
+            seats: this.selected,
         }
     
         this.ticketService.postMovieTicket(clientInfo)
         .subscribe({
             next: data => {
                 console.log('purchased!!!')
+                //store tickets purchased inside a subject
+                this.handleTicket(clientInfo);
                 this.router.navigate(['cinema'])
             },
             error: error => console.log(error)
@@ -108,18 +137,30 @@ export class HallComponent implements OnInit, OnDestroy {
     }
 
     openDialogForAgeAndStudent() {
-        console.log('age!!!')
-        //this.dialogService.open()
+        this.dialogService.openConfirmationDialog();
     }
 
     openDialogForWallet() {
-        console.log('wallet increase!!!')
-        //this.dialogService.open()
+        this.dialogService.openConfirmationDialog();
     }
-    
+
+    handleTicket(clientInfo: ClientInfo): void {
+        if (clientInfo.seats) {
+            for(let i = 0; i < clientInfo.seats?.length; i++) {
+                let ticket: Ticket = {
+                    movie: this.movie.title,
+                    startDate: this.show.startDate,
+                    startTime: this.show.startTime,
+                    seat: clientInfo.seats[i],
+                    cost: this.seat.baseCost
+                }
+                this.ticketService.tickets.push(ticket);
+            }
+        }
+    }
+
     ngOnDestroy(): void {
-        //this.cinemaService.movie.unsubscribe();
-        //this.cinemaService.seat.unsubscribe();
-        //this.cinemaService.show.unsubscribe();
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 }

@@ -9,3 +9,4 @@ export * from './cinema/movie-info/movie-card.component';
 export * from './cinema/hall/hall.component';
 export * from './account/account.component';
 export * from './cinema/hall/dialog/dialog.component'
+export * from './tickets/tickets.component';

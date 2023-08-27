@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Your Purchased Tickets</h1>
+    <div *ngIf="tickets.length > 0">
+        
+        <div *ngFor="let ticket of tickets;">
+            <div class="cardWrap">
+                <div class="card cardLeft">
+                    <h1><span>Cinema</span></h1>
+                    <div class="title">
+                        <h2>Movie: {{ticket.movie}}</h2>
+                    </div>
+                    <div class="seat">
+                        <h2>Cost: {{ticket.cost}}</h2>
+                    </div>
+                    <div class="time">
+                        <h2>Show: {{ticket.startDate}} - {{ticket.startTime}}</h2>
+                    </div>
+
+                </div>
+                <div class="card cardRight">
+                    <div class="number">
+                        <h3>{{ticket.seat}}</h3>
+                        <span>seat</span>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+    </div>
+</div>

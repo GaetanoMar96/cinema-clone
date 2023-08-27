@@ -10,7 +10,8 @@ import { CinemaService } from './../../../services/index';
   styleUrls: ['./movie-card.component.scss'],
 })
 export class MovieCardComponent implements OnInit, OnDestroy {
-  movie: Movie;
+  
+  selectedMovie: Movie;
   shows: Show[] = [];
   
   movieTitle: string;
@@ -23,37 +24,28 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.cinemaService.movie.subscribe(movie => {
-      this.movie = movie;
+    this.cinemaService.selectedMovieSubject.subscribe(movie => {
+      this.selectedMovie = movie;
     });
-
-    if (this.movie.title) {
-      //this.movieTitle = this.movie.title;
-      this.shows = [{
-        startDate: '2023-08-14',
-        startTime: '10:00'
-      },{
-        startDate: '2023-08-14',
-        startTime: '12:00'
-      }
-      ,{
-        startDate: '2023-08-14',
-        startTime: '12:00'
-      }]
-
-      //this.shows = this.cinemaService.getAllShowsForMovie(this.movieTitle);        
+    
+    if (this.selectedMovie.title) {
+      this.movieTitle = this.selectedMovie.title;
+      this.shows = this.cinemaService.getAllShowsForMovie(this.movieTitle);        
     }
   }
 
   getTicket(show: Show): void {
     if (show.startDate && show.startTime) {
-      console.log(show.startTime)
       //force startTime
       const startTime = show.startTime.substring(0, show.startTime.length - 3)
+      
+      //store the chosen show
+      this.cinemaService.selectedShowSubject.next(show);
+      
       this.cinemaService.getAllSeatsForMovie(this.movieTitle, show.startDate, startTime)
       .subscribe({
         next: (seat: Seat) => {
-          this.cinemaService.seat.next(seat);
+          this.cinemaService.selectedSeatSubject.next(seat);
           this.router.navigate(['/cinema/hall'])
         },
         error: (error) => console.log(error),

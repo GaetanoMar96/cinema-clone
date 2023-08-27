@@ -2,14 +2,14 @@
   <div class="movie-card">
     <div class="card_left">
       <div class="card_details">
-        <h1>{{movie.title}}</h1>
+        <h1>{{selectedMovie.title}}</h1>
         <div class="card_category">
-          <p class="PG">{{movie.rated}}</p>
-          <p class="year">{{movie.year}}</p>
-          <p class="genre">{{movie.genre}}</p>
-          <p class="time">{{movie.runtime}}</p>
+          <p class="PG">{{selectedMovie.rated}}</p>
+          <p class="year">{{selectedMovie.year}}</p>
+          <p class="genre">{{selectedMovie.genre}}</p>
+          <p class="time">{{selectedMovie.runtime}}</p>
         </div>
-        <p class="plot">{{movie.plot}}</p>
+        <p class="plot">{{selectedMovie.plot}}</p>
         <p class="show">Available shows:</p>
         <span *ngFor="let show of shows">  
           <button class="ticket-button" (click)="getTicket(show)">
@@ -20,7 +20,7 @@
     </div>
     <div class="card_right">
       <div>
-        <img src="{{movie.poster}}" alt="">
+        <img src="{{selectedMovie.poster}}" alt="">
       </div>
     </div>
   </div>
