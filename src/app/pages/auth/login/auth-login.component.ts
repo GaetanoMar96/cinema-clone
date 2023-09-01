@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { AuthenticationRequest } from '../../../models/index';
 import { AuthenticationService } from '../../../services/authentication.service';
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService
-  ) //private alertService: AlertService
+  )
   {}
 
   ngOnInit() {
@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
-    //this.alertService.clear();
     if (this.form.invalid) {
       return;
     }
@@ -51,16 +49,14 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService
       .login(request)
-      .pipe(first())
+      .pipe(take(1))
       .subscribe({
         next: () => {
           // valid registration navigate to home page
           this.router.navigateByUrl('home');
         },
         error: (error) => {
-          //this.alertService.error(error);
           console.log(error);
-          this.router.navigate(['/auth/register']);
           this.loading = false;
         },
       });

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Movie, Show, Seat } from './../../../models/index';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 import { CinemaService } from './../../../services/index';
 
 @Component({
@@ -13,18 +14,19 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   
   selectedMovie: Movie;
   shows: Show[] = [];
-  
   movieTitle: string;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private cinemaService: CinemaService,
     private router: Router
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.cinemaService.selectedMovieSubject.subscribe(movie => {
+    this.cinemaService.selectedMovieSubject
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(movie => {
       this.selectedMovie = movie;
     });
     
@@ -54,6 +56,7 @@ export class MovieCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

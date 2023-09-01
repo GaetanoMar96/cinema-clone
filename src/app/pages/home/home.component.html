@@ -1,19 +1,45 @@
-<div class="navbar">
-</div>
+<div class="opening-page">
+  <header>
+    <nav class="navbar">
+      <a class="navbar-brand">
+        <img src="assets/cinema-logo.jpg" alt="Cinema Logo" class="logo-image">
+        CinemaX
+      </a>
+      <ul class="nav">
+        <button mat-fab extended color="warn">
+          <mat-icon>theaters</mat-icon>
+          <a class="nav-link active" routerLink="/cinema">Latest movies</a>
+          </button>
+      </ul>
+    </nav>
+  </header>
   <div class="main">
-  <div class="area">
-    <h2>See the latest movies in the theatre</h2>
-    <h3>Or create your collection of favourite movies</h3>
-
-    <div class="example-button-row" >
-      <button mat-fab extended color="warn" >
-        <mat-icon>manage_accounts</mat-icon>
-        <a class="nav-link active" routerLink="/movies">Movies</a>
-        </button>
-      <button mat-fab extended color="accent">
-        <mat-icon>theaters</mat-icon>
-        <a class="nav-link active" routerLink="/cinema">Cinema</a>
-        </button>
+  <div class="carousel-container">
+    <div class="carousel-container">
+      <ngb-carousel *ngIf="movies" class="custom-carousel">
+        <ng-template ngbSlide *ngFor="let movie of movies">
+          <div class="carousel-image-container">
+            <img [src]="movie.poster" alt="Movie Poster" class="carousel-image">
+          </div>
+        </ng-template>
+      </ngb-carousel>
     </div>
   </div>
-  </div>
+</div>
+  <section class="cinema-info">
+    <h2>Welcome to CinemaX</h2>
+    <p>Your ultimate movie destination for the best cinematic experience. Enjoy the latest blockbusters in state-of-the-art theaters.</p>
+    <a href="#" class="btn btn-primary">Learn More</a>
+  </section>
+</div>
+
+      
+    
+
+
+
+
+
+
+
+

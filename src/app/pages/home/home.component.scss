@@ -24,7 +24,6 @@ body {
 
   .main {
     width: 100%;
-    margin-top: -100px;
     background-size: cover;
     align-items: center;
     overflow-x: hidden;
@@ -63,3 +62,91 @@ body {
     .example-button-row a {
     margin-right: 8px;
     }
+///////////////////////////////////////////////////////////////
+
+.logo-image {
+  max-height: 50px; /* Set the maximum height of the logo */
+}
+.opening-page {
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f8f8;
+}
+
+header {
+  background-color: #b70404;
+  color: #fff;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.custom-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px; /* Set the height of the carousel container */
+}
+
+.carousel-image-container {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.cinema-info {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cinema-info h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cinema-info p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+}

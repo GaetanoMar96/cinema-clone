@@ -13,9 +13,6 @@
 
 export interface ClientInfo { 
     userId?: string;
-    age?: number;
-    isStudent?: boolean;
-    wallet?: number;
     idMovie?: number;
     ticketId?: number;
     seats?: Array<string>;

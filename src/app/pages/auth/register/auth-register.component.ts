@@ -8,7 +8,7 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { RegisterRequest, Role } from '../../../models/index';
 import { AuthenticationService } from '../../../services/authentication.service';
 
@@ -25,7 +25,7 @@ export class RegistrationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService
-  ) //private alertService: AlertService
+  )
   {}
 
   ngOnInit() {
@@ -46,9 +46,6 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // reset alerts on submit
-    //this.alertService.clear();
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
@@ -59,14 +56,13 @@ export class RegistrationComponent implements OnInit {
     const request: RegisterRequest = this.getRequest();
     this.authenticationService
       .register(request)
-      .pipe(first())
+      .pipe(take(1))
       .subscribe({
         next: () => {
           // valid registration navigate to log in form
           this.router.navigate(['/auth/login']);
         },
         error: (error) => {
-          //this.alertService.error(error);
           console.log(error);
           this.loading = false;
         },

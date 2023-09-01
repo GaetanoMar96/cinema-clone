@@ -19,7 +19,7 @@ export class HallComponent implements OnInit, OnDestroy {
     show: Show;
     seat: Seat;
 
-    rows: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    rows: string[] = ['A', 'B', 'C', 'D', 'E'];
     cols: number[]  = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     movieTitle:string = 'Movie';
@@ -45,7 +45,9 @@ export class HallComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.user = this.authenticationService.userValue;
 
-        this.cinemaService.selectedMovie$.subscribe(
+        this.cinemaService.selectedMovie$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
             movie => this.movie = movie
         );
 
@@ -91,44 +93,34 @@ export class HallComponent implements OnInit, OnDestroy {
         this.selected.push(pos);
     }
 
+    //Store all the selected seats
+    clearSelectedSeat(pos: string) {
+        const index = this.selected.indexOf(pos, 0);
+        if (index > -1) {
+            this.selected.splice(index, 1);
+        }
+    }
+
     //purchase ticket
     purchaseTicket(): void {
         if (!this.user) { 
             console.log('No user logged in');
             this.router.navigate(['/auth/login']);
             return;
-        } 
-        
-        if (this.user.age == undefined || this.user.isStudent == undefined ) {
-            console.log('age problem');
-            this.openDialogForAgeAndStudent();
-            return;
         }
-
-        if (this.seat && this.seat.baseCost) {
-            if (this.user.wallet && this.seat.baseCost > this.user.wallet) {
-                console.log('wallet problem');
-                console.log(this.user.wallet);
-                this.openDialogForWallet();
-                return;
-            }
-        } 
         
-        let clientInfo: ClientInfo = {
+        let ticketInfo: ClientInfo = {
             userId: this.user?.userId,
             idMovie: this.movie?.id,
-            age: 23,//this.user?.age,
-            isStudent: true,//this.user?.isStudent,
-            wallet: 20,//this.user?.wallet,
             seats: this.selected,
         }
     
-        this.ticketService.postMovieTicket(clientInfo)
+        this.ticketService.postMovieTicket(ticketInfo)
         .subscribe({
             next: data => {
                 console.log('purchased!!!')
                 //store tickets purchased inside a subject
-                this.handleTicket(clientInfo);
+                this.handleTicket(ticketInfo);
                 this.router.navigate(['cinema'])
             },
             error: error => console.log(error)
@@ -140,18 +132,17 @@ export class HallComponent implements OnInit, OnDestroy {
         this.dialogService.openConfirmationDialog();
     }
 
-    openDialogForWallet() {
-        this.dialogService.openConfirmationDialog();
-    }
-
-    handleTicket(clientInfo: ClientInfo): void {
-        if (clientInfo.seats) {
-            for(let i = 0; i < clientInfo.seats?.length; i++) {
+    handleTicket(ticketInfo: ClientInfo): void {
+        //storing ticket info
+        this.ticketService.ticketInfo.next(ticketInfo);
+        
+        if (ticketInfo.seats) {
+            for(let i = 0; i < ticketInfo.seats?.length; i++) {
                 let ticket: Ticket = {
                     movie: this.movie.title,
                     startDate: this.show.startDate,
                     startTime: this.show.startTime,
-                    seat: clientInfo.seats[i],
+                    seat: ticketInfo.seats[i],
                     cost: this.seat.baseCost
                 }
                 this.ticketService.tickets.push(ticket);

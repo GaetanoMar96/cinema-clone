@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
 import { ClientInfo } from './../models/index';
@@ -10,9 +9,12 @@ import { Ticket } from '../helpers';
 @Injectable({ providedIn: 'root' })
 export class TicketService {
 
+  ticketInfo = new BehaviorSubject({});
   tickets: Ticket[] = [];
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private http: HttpClient) {  
+    
+  }
 
   postMovieTicket(request: ClientInfo): Observable<any> {
     return this.http.post(

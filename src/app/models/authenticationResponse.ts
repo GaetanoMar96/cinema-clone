@@ -16,7 +16,4 @@ export interface AuthenticationResponse {
     firstname?: string;
     lastname?: string;
     accessToken?: string;
-    age?: number;
-    isStudent?: boolean;
-    wallet?: number;
 }

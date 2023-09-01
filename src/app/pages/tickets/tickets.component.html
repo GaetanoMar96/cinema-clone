@@ -1,8 +1,11 @@
 <div class="container">
     <h1>Your Purchased Tickets</h1>
+    <span><h3>Here there are the latest tickets you bought</h3></span>
+
+    <mat-divider class="divider" [inset]="true"></mat-divider>
+
     <div *ngIf="tickets.length > 0">
-        
-        <div *ngFor="let ticket of tickets;">
+        <div *ngFor="let ticket of tickets;let i = index">
             <div class="cardWrap">
                 <div class="card cardLeft">
                     <h1><span>Cinema</span></h1>
@@ -23,8 +26,16 @@
                         <span>seat</span>
                     </div>
                 </div>
+                
+            </div>
             
         </div>
-    </div>
+        <div class="example-button-container">
+            <button mat-raised-button color="warn"
+             aria-label="Example icon button with a home icon" 
+             (click)="onDeleteTicket()">
+                Delete ticket
+            </button>
+        </div>
     </div>
 </div>

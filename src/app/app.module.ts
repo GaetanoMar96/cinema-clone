@@ -22,6 +22,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatBadgeModule} from '@angular/material/badge';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,12 +60,15 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatCheckboxModule,
     MatInputModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatBadgeModule,
+    NgbModule
   ],
   exports: [
   ],
   providers: [
     MatDatepickerModule,
+    NgbModule,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
   ],

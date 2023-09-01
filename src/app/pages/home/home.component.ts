@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
-import { AuthenticationResponse } from './../../models/index';
-import { AuthenticationService } from './../../services/index';
+import { CinemaService } from './../../services/index';
+import { Movie } from './../../models/index';
 
 @Component({ 
     templateUrl: 'home.component.html',
-    styleUrls: ['./home.component.scss'] })
+    styleUrls: ['./home.component.scss']
+  })
 export class HomeComponent {
-    user: AuthenticationResponse | null;
+    
+  movies: Movie[] = this.cinemaService.getAllMovies();
 
-    constructor(private authenticationService: AuthenticationService) {
-        this.user = this.authenticationService.userValue;
+  constructor(private cinemaService: CinemaService) {}
+
+    ngOninit() {
+      
     }
 }

@@ -30,9 +30,12 @@ export class CinemaService {
 
   getAllMovies(): Movie[] {
     if (this.movies && this.movies.length > 0) {
+      console.log("no http for movies")
       return this.movies.slice();
     } else {
+      console.log("http for movies")
       this.getAvailableMoviesList();
+      console.log(this.movies)
       return this.movies;
     }
   }

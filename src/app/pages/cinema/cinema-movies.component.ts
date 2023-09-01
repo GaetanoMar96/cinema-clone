@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { CinemaService } from './../../services/index';
+import { CinemaService, AuthenticationService } from './../../services/index';
 import { Movie } from './../../models/index';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +14,10 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   
   movies: Movie[] = [];
 
+  private destroy$ = new Subject<void>(); // Subject for unsubscribing
+
   constructor(private cinemaService: CinemaService, 
+    private authenticationService: AuthenticationService,
     private router: Router) {}
 
   ngOnInit() {
@@ -21,6 +25,13 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   onMovieInfo(movieName: string | undefined) {
+
+    //if user is not logged in
+    if (this.authenticationService.userValue === undefined) {
+      console.log("Not logged in");
+      this.router.navigate(['/auth/login']);
+    }
+
     let movieInfo: Movie | undefined;
 
     if (this.movies.length > 0) {
@@ -32,7 +43,9 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
     }
 
     if (movieName !== undefined) {
-      this.cinemaService.getMovieInfo(movieName).subscribe({
+      this.cinemaService.getMovieInfo(movieName)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (movieInfo) => {
           this.goToMovieCard(movieInfo);
         },
@@ -42,7 +55,9 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   goToMovieCard(movieInfo: Movie): void {
-    this.cinemaService.selectedMovie$.subscribe(
+    this.cinemaService.selectedMovie$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
       movie => {
         if (movie !== movieInfo) {
           //store movie only if different from previous one
@@ -53,5 +68,8 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/cinema/movie-card']);
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

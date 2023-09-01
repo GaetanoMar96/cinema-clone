@@ -15,7 +15,7 @@
               <span>Account</span>
             </button>
             <button mat-menu-item (click)="goToTickets()">
-              <mat-icon>shopping_cart</mat-icon>
+              <mat-icon>shopping_cart matBadge="2" [matBadgeHidden]="false" </mat-icon>
               <span>Tickets</span>
             </button>
             <button mat-menu-item (click)="logout()">
@@ -30,11 +30,11 @@
               <a class="nav-link active" routerLink="../home">Home</a>
             </button>
           </li>
-          <li class="nav-item" routerLinkActive="active">
+          <!--<li class="nav-item" routerLinkActive="active">
             <button mat-menu-item>
               <a class="nav-link active" routerLink="/movies">Movies</a>
             </button>
-          </li>
+          </li>-->
           <li class="nav-item">
             <button mat-menu-item>
               <a class="nav-link active" routerLink="/cinema">Cinema</a>
