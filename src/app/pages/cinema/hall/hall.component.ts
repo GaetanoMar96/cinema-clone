@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService, CinemaService, TicketService } from './../../../services/index';
 import { AuthenticationResponse, ClientInfo, Movie, Show, Seat } from './../../../models/index';
 import { DialogService } from './../../../services/index';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Ticket } from '../../../helpers/index';
 
@@ -14,22 +14,24 @@ import { Ticket } from '../../../helpers/index';
 })
 export class HallComponent implements OnInit, OnDestroy {
     
-    private user: AuthenticationResponse | null;
+    
+    private userId: string;
     movie: Movie;
     show: Show;
     seat: Seat;
-
-    rows: string[] = ['A', 'B', 'C', 'D', 'E'];
-    cols: number[]  = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    movieTitle:string = 'Movie';
-    hallNumber: string = 'Hall Number'; // i need it
+    title: string = 'title';
+    hallName: string = 'hall';
     dateTime: string = 'Date Time';
 
+    //Hall seats
+    rows: string[] = ['A', 'B', 'C', 'D', 'E'];
+    cols: number[]  = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     available: Array<string> = [];
     reserved: Array<string> = [];
     selected: Array<string> = [];
 
+    private ticketInfo: ClientInfo;
+    private transaction: Subscription = new Subscription();
     private destroy$ = new Subject<void>(); // Subject for unsubscribing
 
     constructor(
@@ -43,7 +45,13 @@ export class HallComponent implements OnInit, OnDestroy {
       }
 
     ngOnInit(): void {
-        this.user = this.authenticationService.userValue;
+        if (this.authenticationService.userValue?.userId === undefined) { 
+            console.log('No user logged in');
+            this.router.navigate(['/auth/login']);
+            return;
+        }
+
+        this.userId = this.authenticationService.userValue.userId;
 
         this.cinemaService.selectedMovie$
         .pipe(takeUntil(this.destroy$))
@@ -65,13 +73,24 @@ export class HallComponent implements OnInit, OnDestroy {
             show => this.show = show
         );
         
-        if (this.movie.title) {
-            this.movieTitle = this.movie.title;
+        if(this.movie && this.movie.title) {
+            this.title = this.movie.title;
+        }
+
+        if (this.seat && this.seat.hallName) {
+            this.hallName = this.seat.hallName
         }
 
         if (this.show) {
             this.dateTime = this.show.startDate + '-' + this.show.startTime;
         }
+
+        this.transaction = this.dialogService.transaction.subscribe(
+            (data) => {
+                if (data)
+                    this.purchaseTicket();
+            }
+        )
     }
 
     //return status of each seat
@@ -101,35 +120,38 @@ export class HallComponent implements OnInit, OnDestroy {
         }
     }
 
-    //purchase ticket
-    purchaseTicket(): void {
-        if (!this.user) { 
-            console.log('No user logged in');
-            this.router.navigate(['/auth/login']);
-            return;
-        }
+    reserveTickets(): void {
+        let totalPrice = 0;
+        if (this.seat && this.seat.baseCost)
+            totalPrice = this.selected.length * this.seat.baseCost;
         
-        let ticketInfo: ClientInfo = {
-            userId: this.user?.userId,
+        this.ticketInfo = {
+            userId: this.userId,
             idMovie: this.movie?.id,
             seats: this.selected,
+            totalPrice: totalPrice
         }
-    
-        this.ticketService.postMovieTicket(ticketInfo)
+
+        this.openDialogForPayment();
+    }
+
+    openDialogForPayment(): void {
+        this.dialogService.openConfirmationDialog(this.ticketInfo);
+    }
+
+    //purchase ticket
+    purchaseTicket(): void {
+        this.ticketService.postMovieTicket(this.ticketInfo)
         .subscribe({
             next: data => {
                 console.log('purchased!!!')
                 //store tickets purchased inside a subject
-                this.handleTicket(ticketInfo);
-                this.router.navigate(['cinema'])
+                this.handleTicket(this.ticketInfo);
+                this.router.navigate(['/home']);
             },
             error: error => console.log(error)
         }
         )
-    }
-
-    openDialogForAgeAndStudent() {
-        this.dialogService.openConfirmationDialog();
     }
 
     handleTicket(ticketInfo: ClientInfo): void {
@@ -153,5 +175,6 @@ export class HallComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+        this.transaction.unsubscribe();
     }
 }

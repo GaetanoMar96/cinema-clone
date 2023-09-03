@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService, TransactionService } from '../../services/index';
+import { AuthenticationService } from '../../services/index';
 
 @Component({ templateUrl: 'account.component.html',
 styleUrls: ['./account.component.scss'],})
 export class AccountComponent implements OnInit {
 
-    money: number = 0; //to show user money inside wallet
+    hide = true;
+    oldPassword: string;
+    newPassword: string;
 
     date: Date;
     isStudent: boolean;
-    wallet: number = 0;
-    isButtonDisabled: boolean = false;
+    isButtonDisabled: boolean = true;
 
     constructor(
         private router: Router,
-        private authenticationService: AuthenticationService,
-        private transactionService: TransactionService
+        private authenticationService: AuthenticationService
     ) 
     {}
 
@@ -25,12 +25,9 @@ export class AccountComponent implements OnInit {
         if (!this.authenticationService.userValue) {
             this.router.navigate(['/auth/login']);
         }
-        //disable first button if age and is student info are present
     }
 
     addUserInfo() {
-        console.log(this.date)
-        console.log(this.isStudent)
         if (this.date && this.isStudent != undefined) {
             var timeDiff = Math.abs(Date.now() - this.date.getDate());
             const age = Math.floor((timeDiff / (1000 * 3600 * 24))/365);
@@ -39,9 +36,12 @@ export class AccountComponent implements OnInit {
         }
     }
 
-    increaseWallet() {
+    changePassword() {
+        //retrieve password from the backend if == to old password than update value in db
         const userId = this.authenticationService.userValue?.userId
-        //if (userId && this.wallet > 0)
-            //this.transactionService.patchTransaction(userId, this.wallet);
+        const password = ''
+        if (this.oldPassword == password) {
+            //patch call to backend
+        }
     }
 }

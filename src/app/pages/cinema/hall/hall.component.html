@@ -1,7 +1,7 @@
 <div class="theater">
     <div class="movie-details">
-        <h2>{{movieTitle}}</h2>
-        <div>{{hallNumber}} - {{dateTime}}</div>
+        <h2>{{title}}</h2>
+        <div>{{hallName}} - {{dateTime}}</div>
     </div>
 
     <!-- Showing a static legend bar -->
@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <button [disabled]="seatsEmpty()" class="ticket-button" (click)="purchaseTicket()" >
+    <button [disabled]="seatsEmpty()" class="ticket-button" (click)="reserveTickets()" >
         Purchase
     </button>
 </div>

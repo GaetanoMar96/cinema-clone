@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from './../pages/index';
-import { Router } from '@angular/router';
+import { PaymentDialogComponent } from './../pages/index';
+import { ClientInfo } from './../models/index';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DialogService {
-  constructor(private dialog: MatDialog,
-    private router: Router) {}
 
-  openConfirmationDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
+  transaction: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  constructor(private dialog: MatDialog) {}
+
+  openConfirmationDialog(ticketInfo: ClientInfo): void {
+    const dialogRef = this.dialog.open(PaymentDialogComponent, {
       width: '400px',
     });
 
-    dialogRef.componentInstance.closeEmitter.subscribe((choice) => {
-      if (choice) {
+    dialogRef.componentInstance.closeEmitter.subscribe((data: ClientInfo) => {
+      if (data) {
+        ticketInfo.cardNumber = data.cardNumber;
+        ticketInfo.expirationDate = data.expirationDate;
+        ticketInfo.cvc = data.cvc;
+
+        console.log('transaction done succesfully');
+        this.transaction.next(true);
         this.dialog.closeAll();
-        this.router.navigate(['/home']);
       }
       }
     );

@@ -8,5 +8,5 @@ export * from './cinema/cinema-movies.component';
 export * from './cinema/movie-info/movie-card.component';
 export * from './cinema/hall/hall.component';
 export * from './account/account.component';
-export * from './cinema/hall/dialog/dialog.component'
+export * from './cinema/hall/dialog/payment-dialog.component'
 export * from './tickets/tickets.component';

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CinemaService } from './../../services/index';
 import { Movie } from './../../models/index';
 
@@ -6,13 +6,13 @@ import { Movie } from './../../models/index';
     templateUrl: 'home.component.html',
     styleUrls: ['./home.component.scss']
   })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     
-  movies: Movie[] = this.cinemaService.getAllMovies();
+  movies: Movie[];
 
   constructor(private cinemaService: CinemaService) {}
 
-    ngOninit() {
-      
-    }
+  ngOnInit(): void {
+    this.movies = this.cinemaService.getAllMovies();
+  }
 }

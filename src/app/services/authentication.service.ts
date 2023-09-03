@@ -51,23 +51,6 @@ export class AuthenticationService {
         this.router.navigate(['/auth/login']);
     }
 
-    /*updateUser(age: number, isStudent: boolean) {
-        const userId = this.userValue?.userId;
-        
-        console.log("ready to call patch method")
-        this.http.patch(
-            `${environment.apiUrl}/${ApiPaths.Auth}/update/${userId}/${age}/${isStudent}`, 
-            "" //no body
-        ).subscribe(
-            data => {
-                console.log("correct call")
-                if (this.userValue) {
-                    this.userValue.age = age;
-                    this.userValue.isStudent = isStudent;
-                }
-        });
-    }*/
-
     //utility method to check if token expired
     tokenExpired(token: string): boolean {
         const expiry = (JSON.parse(window.atob(token.split('.')[1]))).exp;

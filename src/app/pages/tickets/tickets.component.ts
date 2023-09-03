@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Ticket } from './../../helpers/index';
 import { Subject } from 'rxjs';
 import { ClientInfo } from '../../models/index';

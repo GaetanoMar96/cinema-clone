@@ -1,65 +1,84 @@
 <div class="container">
-  <div class="row">
-      <div class="col-12">
-          <h2>Manage Your Account</h2>
-      </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-        <h3>Your wallet: {{money}}$</h3>
-    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Manage Your Account</h2>
+        </div>
     </div>
 
     <mat-divider class="divider" [inset]="true"></mat-divider>
 
-  <div class="row">
-      <div class="col-12 col-md-4">
-          <mat-form-field>
-              <mat-label>Insert Your Birthday</mat-label>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="date">
-              <mat-hint>MM/DD/YYYY</mat-hint>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-      </div>
+    <div class="row">
+        <div class="col-12">
+            <h3>Change your password</h3>
+        </div>
+    </div>
 
-      <div class="col-12 col-md-4">
-          <section class="example-section">
-              <mat-checkbox [(ngModel)]="isStudent" class="example-margin">Are You a Student?</mat-checkbox>
-          </section>
-      </div>
+    <div class="row">
 
-      <div class="col-12 col-md-4">
-          <div class="example-button-container">
-              <button mat-raised-button color="warn"
-               aria-label="Example icon button with a home icon" 
-               (click)="addUserInfo()"
-               [disabled]="isButtonDisabled">
-                  Submit Request
-              </button>
-          </div>
-      </div>
-  </div>
+        <div class="col col-md-6">
+            <mat-form-field>
+                <mat-label>Your old password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="oldPassword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
 
-  <mat-divider class="divider" [inset]="true"></mat-divider>
+        <div class="col col-md-6">
+            <mat-form-field>
+                <mat-label>Your new password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="newPassword">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
 
-  <div class="row">
-      <div class="col-12 col-md-6">
-          <mat-form-field floatLabel="always">
-              <mat-label>Amount</mat-label>
-              <input matInput type="number" class="example-right-align" placeholder="Wallet" [(ngModel)]="wallet">
-              <span matTextPrefix>$&nbsp;</span>
-              <span matTextSuffix>.00</span>
-          </mat-form-field>
-      </div>
+        <div class="col col-md-6">
+            <div class="example-button-container">
+                <button mat-raised-button color="warn" aria-label="Example icon button with a home icon"
+                    (click)="changePassword()">
+                    Change password
+                </button>
+            </div>
+        </div>
+    </div>
 
-      <div class="col-12 col-md-6">
-          <div class="example-button-container">
-              <button mat-raised-button color="warn" aria-label="Example icon button with a home icon" (click)="increaseWallet()">
-                  Increase Wallet
-              </button>
-          </div>
-      </div>
-  </div>
+    <mat-divider class="divider" [inset]="true"></mat-divider>
+
+    <div class="row">
+        <div class="col-12">
+            <h3>Additional info</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <mat-form-field>
+                <mat-label>Insert Your Birthday</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <section class="example-section">
+                <mat-checkbox [(ngModel)]="isStudent" class="example-margin">Are You a Student?</mat-checkbox>
+            </section>
+        </div>
+
+        <div class="col-12 col-md-4">
+            <div class="example-button-container">
+                <button mat-raised-button color="warn" aria-label="Example icon button with a home icon"
+                    (click)="addUserInfo()" [disabled]="isButtonDisabled">
+                    Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
