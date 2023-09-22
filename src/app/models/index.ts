@@ -6,3 +6,4 @@ export * from './role';
 export * from './seat';
 export * from './show';
 export * from './movie';
+export * from './movieDetail';

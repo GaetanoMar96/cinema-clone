@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Movie, Show, Seat } from './../../../models/index';
+import { MovieDetail, Show, Seat } from './../../../models/index';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { CinemaService } from './../../../services/index';
 })
 export class MovieCardComponent implements OnInit, OnDestroy {
   
-  selectedMovie: Movie;
+  selectedMovie: MovieDetail;
   shows: Show[] = [];
   movieTitle: string;
 

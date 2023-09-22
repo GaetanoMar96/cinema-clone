@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, CinemaService, TicketService } from './../../../services/index';
-import { AuthenticationResponse, ClientInfo, Movie, Show, Seat } from './../../../models/index';
+import { AuthenticationResponse, ClientInfo, MovieDetail, Show, Seat } from './../../../models/index';
 import { DialogService } from './../../../services/index';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class HallComponent implements OnInit, OnDestroy {
     
     
     private userId: string;
-    movie: Movie;
+    movie: MovieDetail;
     show: Show;
     seat: Seat;
     title: string = 'title';

@@ -9,7 +9,8 @@
             placeholder="4242 4242 4242 4242"
             minlength="19" 
             maxlength="19"
-            [ngClass]="{ 'is-invalid': submitted && f.cardNumber.errors }" />
+            [ngClass]="{ 'is-invalid': submitted && f.cardNumber.errors }"
+            appCreditCardFormat />
             <div *ngIf="submitted && f.cardNumber.errors" class="invalid-feedback">
                 <div *ngIf="f.cardNumber.errors.required">card is required</div>
             </div>

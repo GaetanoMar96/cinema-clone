@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
-import { Movie, Show, Seat } from './../models/index';
+import { Movie, Show, Seat, MovieDetail } from './../models/index';
 
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
@@ -16,7 +16,7 @@ export class CinemaService {
   private shows: Show[] = [];
 
   //Subjects
-  selectedMovieSubject = new BehaviorSubject<Movie>({});
+  selectedMovieSubject = new BehaviorSubject<MovieDetail>({});
   selectedShowSubject = new ReplaySubject<Show>();
   selectedSeatSubject = new ReplaySubject<Seat>();
   
@@ -42,19 +42,19 @@ export class CinemaService {
 
   getAvailableMoviesList(): void {
     this.http
-      .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}`)
+      .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}/now_playing`)
       .subscribe({
         next: (movies: Movie[]) => {
-          console.log('movies get from api success')
+          console.log('movies get from api success');
           movies.forEach((movie) => this.movies.push(movie));
         },
         error: (error) => console.log(error),
       });
   }
 
-  getMovieInfo(movie: string): Observable<Movie> {
-    return this.http.get<Movie>(
-      `${environment.apiUrl}/${ApiPaths.Movies}/${movie}/info`
+  getMovieInfo(movieId: string): Observable<MovieDetail> {
+    return this.http.get<MovieDetail>(
+      `${environment.apiUrl}/${ApiPaths.Movies}/movie/${movieId}`
     );
   }
 
@@ -66,7 +66,7 @@ export class CinemaService {
     }
     
     this.http
-      .get<Show[]>(`${environment.apiUrl}/${movie}/shows`)
+      .get<Show[]>(`${environment.apiUrl}/${ApiPaths.Theaters}/${movie}/shows`)
       .subscribe({
         next: (shows: Show[]) => {
           shows.forEach((show) => this.shows.push(show));
@@ -81,6 +81,6 @@ export class CinemaService {
     date: string,
     time: string
   ): Observable<Seat> {
-    return this.http.get<Seat>(`${environment.apiUrl}/${movie}/seats/${date}/${time}`);
+    return this.http.get<Seat>(`${environment.apiUrl}/${ApiPaths.Theaters}/${movie}/seats/${date}/${time}`);
   }
 }

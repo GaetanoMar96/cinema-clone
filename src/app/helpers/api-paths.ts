@@ -1,6 +1,7 @@
 export enum ApiPaths {
     Auth = 'auth',
-    Movies = 'movies',
+    Movies = 'movies/db',
+    Theaters = 'theater',
     Tickets = 'tickets',
     Transactions = 'transactions'
  }

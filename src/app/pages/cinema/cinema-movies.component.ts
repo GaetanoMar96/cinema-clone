@@ -22,9 +22,10 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.movies = this.cinemaService.getAllMovies();
+    
   }
 
-  onMovieInfo(movieName: string | undefined) {
+  onMovieInfo(movieId: number | undefined) {
 
     //if user is not logged in
     if (this.authenticationService.userValue === undefined) {
@@ -35,15 +36,15 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
     let movieInfo: Movie | undefined;
 
     if (this.movies.length > 0) {
-      movieInfo = this.movies.filter((m) => m.title === movieName)[0];
+      movieInfo = this.movies.filter((m) => m.id === movieId)[0];
     }
 
     if (movieInfo !== undefined) {
       this.goToMovieCard(movieInfo);
     }
 
-    if (movieName !== undefined) {
-      this.cinemaService.getMovieInfo(movieName)
+    if (movieId) {
+      this.cinemaService.getMovieInfo(movieId.toLocaleString())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (movieInfo) => {
