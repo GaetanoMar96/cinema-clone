@@ -7,3 +7,4 @@ export * from './seat';
 export * from './show';
 export * from './movie';
 export * from './movieDetail';
+export * from './passwordRequest';

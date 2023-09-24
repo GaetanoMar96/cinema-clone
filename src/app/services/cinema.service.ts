@@ -13,6 +13,7 @@ export class CinemaService {
 
   movieName: string = 'Movie';
   private movies: Movie[] = [];
+  upcomingMovies: Movie[] = [];
   private shows: Show[] = [];
 
   //Subjects
@@ -56,6 +57,18 @@ export class CinemaService {
     return this.http.get<MovieDetail>(
       `${environment.apiUrl}/${ApiPaths.Movies}/movie/${movieId}`
     );
+  }
+
+  getUpcomingMovies(): void {
+    this.http
+      .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}/upcoming`)
+      .subscribe({
+        next: (movies: Movie[]) => {
+          console.log('movies get from api success');
+          movies.forEach((movie) => this.upcomingMovies.push(movie));
+        },
+        error: (error) => console.log(error),
+      });
   }
 
   getAllShowsForMovie(movie: string): Show[] {

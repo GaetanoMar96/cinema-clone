@@ -6,9 +6,9 @@
             <label class="form-label">Card number</label>
             <input type="text" formControlName="cardNumber" 
             class="form-control label" 
-            placeholder="4242 4242 4242 4242"
-            minlength="19" 
-            maxlength="19"
+            placeholder="4242424242424242"
+            minlength="16" 
+            maxlength="16"
             [ngClass]="{ 'is-invalid': submitted && f.cardNumber.errors }"
             appCreditCardFormat />
             <div *ngIf="submitted && f.cardNumber.errors" class="invalid-feedback">

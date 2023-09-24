@@ -1,0 +1,73 @@
+.container-fluid {
+    padding: 20px;
+}
+
+.movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    //background-color: #e71a1a; 
+    padding: 20px; /* Add some padding to the grid */
+    border-radius: 10px; /* Add rounded corners to the background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the background */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+	background-size: cover;
+}
+
+
+.movie-tile {
+    flex-basis: calc(50% - 30px); /* Two columns with gutter */
+}
+
+.movie-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+	background-color: rgb(243, 240, 240);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.movie-header {
+    margin-bottom: 10px;
+}
+
+.movie-title {
+    font-size: 20px;
+    margin: 0;
+}
+
+.movie-content {
+    text-align: center;
+}
+
+.movie-poster {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.movie-plot {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+.movie-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.movie-poster {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}

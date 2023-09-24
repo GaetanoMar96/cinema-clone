@@ -10,3 +10,4 @@ export * from './cinema/hall/hall.component';
 export * from './account/account.component';
 export * from './cinema/hall/dialog/payment-dialog.component'
 export * from './tickets/tickets.component';
+export * from './cinema/upcoming/upcoming-movies.component'

@@ -36,8 +36,13 @@ export class TicketsComponent implements OnInit, OnDestroy {
 
   onDeleteTicket() {
     //client info
-    this.ticketService.deleteMovieTicket(this.ticketInfo);
+    this.ticketService.deleteMovieTicket(this.ticketInfo)
+    .subscribe(reponse => this.ticketService.tickets = []);
     this.router.navigate(['/home']);
+  }
+
+  onSendEmail() {
+    //call service to send email with tickets info
   }
 
   ngOnDestroy(): void {

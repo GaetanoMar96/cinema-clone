@@ -12,7 +12,7 @@ export class AccountComponent implements OnInit {
 
     date: Date;
     isStudent: boolean;
-    isButtonDisabled: boolean = true;
+    isButtonDisabled: boolean = false;
 
     constructor(
         private router: Router,
@@ -37,11 +37,12 @@ export class AccountComponent implements OnInit {
     }
 
     changePassword() {
-        //retrieve password from the backend if == to old password than update value in db
-        const userId = this.authenticationService.userValue?.userId
-        const password = ''
-        if (this.oldPassword == password) {
-            //patch call to backend
+        //patch call to backend  
+        if (this.oldPassword !== '' && this.newPassword !== '' && this.oldPassword !== this.newPassword) {   
+            console.log('yeah bitch')   
+            this.authenticationService.changePwd(this.oldPassword, this.newPassword);  
         }
+        this.isButtonDisabled = true;
+        //this.router.navigate(['/cinema']);
     }
 }

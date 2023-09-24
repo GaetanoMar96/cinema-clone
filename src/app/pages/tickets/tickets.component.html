@@ -3,10 +3,10 @@
     <span><h3>Here there are the latest tickets you bought</h3></span>
 
     <mat-divider class="divider" [inset]="true"></mat-divider>
-
+    <mat-grid-list cols="2" rowHeight="2:1">
     <div *ngIf="tickets.length > 0">
         <div class="row">
-        <div class="col-6" *ngFor="let ticket of tickets;let i = index">
+        <mat-grid-tile class="col-6" *ngFor="let ticket of tickets;let i = index">
                 
                 <div class="cardWrap">
                     <div class="card cardLeft">
@@ -30,9 +30,18 @@
                         <div class="barcode"></div>
                     </div>
                 </div>
+            </mat-grid-tile>
             </div>
-            </div>
-        </div>
-        </div>
+    </div>
+    </mat-grid-list>
+    <button mat-fab extended
+            [disabled]="tickets.length == 0" class="ticket-button" (click)="onDeleteTicket()">   
+            Delete tickets     
+    </button>
+    <!--<button mat-fab extended
+            [disabled]="tickets.length == 0" class="ticket-button" (click)="onSendEmail()">   
+            Send tickets via email     
+    </button>-->
+</div>
         
   

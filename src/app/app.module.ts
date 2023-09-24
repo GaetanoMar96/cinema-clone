@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MoviesComponent, HeaderComponent, RegistrationComponent, LoginComponent
   ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent,
-   MovieCardComponent, AccountComponent, PaymentDialogComponent, TicketsComponent } from './pages/index';
+   MovieCardComponent, AccountComponent, PaymentDialogComponent, TicketsComponent, UpcomingMoviesComponent } from './pages/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,7 +39,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MovieCardComponent,
     AccountComponent,
     PaymentDialogComponent,
-    TicketsComponent
+    TicketsComponent,
+    UpcomingMoviesComponent
   ],
   imports: [
     BrowserModule,

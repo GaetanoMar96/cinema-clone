@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
-import { RegisterRequest, AuthenticationRequest, AuthenticationResponse } from "./../models/index";
+import { RegisterRequest, AuthenticationRequest, AuthenticationResponse, PasswordRequest } from "./../models/index";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -49,6 +49,18 @@ export class AuthenticationService {
         this.userSubject.next(null);
         // redirect to login page
         this.router.navigate(['/auth/login']);
+    }
+
+    changePwd(oldPassword: string, newPassword: string): void {
+        const request: PasswordRequest = {
+            userId: this.userValue?.userId,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        }
+        
+        this.http.patch<any>(
+            `${environment.apiUrl}/${ApiPaths.Auth}/changePassword`, request
+        ).subscribe() //to invoke the actual call
     }
 
     //utility method to check if token expired

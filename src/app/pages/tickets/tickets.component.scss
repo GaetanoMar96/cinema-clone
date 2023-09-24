@@ -7,11 +7,15 @@ $black: #343434;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    height: 600px;
+    //height: 800px;
 }
 
 .button-container {
   position: relative;
+}
+
+.list-option {
+  margin-top: 20px;
 }
 
 .cardWrap {
@@ -19,6 +23,7 @@ $black: #343434;
   margin: 3em auto;
   color: #fff;
   font-family: sans-serif;
+  padding-left: 50px;
 }
 
 .card {
@@ -124,4 +129,29 @@ h1 {
   51px 0 0 1px $black,
   56px 0 0 1px $black,
   59px 0 0 1px $black,
+}
+
+.ticket-button {
+	color: black;
+	border: none;
+	padding: 20px;
+	width: 200px;
+	outline: none;
+	font-size: 12px;
+	font-weight: bold;
+	margin-top: 30px;
+	margin-left: 50px;
+	background: #ffd740;
+	border-radius: 12px;
+	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	-webkit-transition: 300ms ease-in-out;
+	-o-transition: 200ms ease-in-out;
+	transition: 200ms ease-in-out;
+	&:hover {
+		-webkit-transform: scale(1.1);
+		-ms-transform: scale(1.1);
+		transform: scale(1.1);
+		background-color: #eb8e23;
+	}
 }

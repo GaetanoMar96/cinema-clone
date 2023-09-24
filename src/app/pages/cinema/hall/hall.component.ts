@@ -164,6 +164,7 @@ export class HallComponent implements OnInit, OnDestroy {
                     movie: this.movie.title,
                     startDate: this.show.startDate,
                     startTime: this.show.startTime,
+                    hallName: this.hallName,
                     seat: ticketInfo.seats[i],
                     cost: this.seat.baseCost
                 }

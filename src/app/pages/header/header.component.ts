@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit, OnChanges {
 
     hidden: boolean = false;
-    value: string;
+    value: string = "1";
 
     constructor(
         private router: Router,
