@@ -7,6 +7,7 @@ import { tap } from 'rxjs/operators';
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
 import { Movie, Show, Seat, MovieDetail } from './../models/index';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
@@ -26,17 +27,19 @@ export class CinemaService {
   selectedShow$: Observable<Show> = this.selectedShowSubject.asObservable();
   selectedSeat$: Observable<Seat> = this.selectedSeatSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  private moviesCollection: AngularFirestoreCollection<Movie>;
+
+  constructor(private http: HttpClient,
+    private angularFirestore: AngularFirestore) {
+    this.moviesCollection = this.angularFirestore.collection<Movie>('movies');
+
   }
 
   getAllMovies(): Movie[] {
     if (this.movies && this.movies.length > 0) {
-      console.log("no http for movies")
       return this.movies.slice();
     } else {
-      console.log("http for movies")
       this.getAvailableMoviesList();
-      console.log(this.movies)
       return this.movies;
     }
   }
@@ -95,5 +98,9 @@ export class CinemaService {
     time: string
   ): Observable<Seat> {
     return this.http.get<Seat>(`${environment.apiUrl}/${ApiPaths.Theaters}/${movie}/seats/${date}/${time}`);
+  }
+
+  pushMoviesIntoFirestore() {
+    
   }
 }

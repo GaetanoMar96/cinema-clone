@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MoviesComponent, LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent, CinemaMoviesComponent, HallComponent
+import { LayoutComponent, LoginComponent, RegistrationComponent, HomeComponent, CinemaMoviesComponent, HallComponent
   , MovieCardComponent, AccountComponent, TicketsComponent, UpcomingMoviesComponent} from './pages/index';
 
 const appRoutes: Routes = [
@@ -17,11 +17,6 @@ const appRoutes: Routes = [
   { path: 'cinema/movie-card', component: MovieCardComponent },
   { path: 'cinema/hall', component: HallComponent },
   { path: 'tickets', component: TicketsComponent },
-  { path: 'movies', component: MoviesComponent, 
-    children: [
-      
-  ]
-  },
   { path: '**', redirectTo: '' }
 ]
 
