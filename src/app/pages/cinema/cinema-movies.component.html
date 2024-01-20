@@ -1,0 +1,21 @@
+<div *ngIf="movies.length > 0" class="container-fluid">
+    <div class="movie-grid">
+        <div *ngFor="let movie of movies; let i = index" class="movie-tile">
+            <div class="movie-card">
+                <div class="movie-header">
+                    <h2 class="movie-title">{{movie.title}}</h2>
+                    <p class="movie-subtitle">{{movie.release_date}}</p>
+                </div>
+                <div class="movie-content">
+                    <img class="movie-poster" src="{{'http://image.tmdb.org/t/p/original/' + movie.poster_path}}">
+                    <p class="movie-plot">
+                        {{movie.overview}}
+                    </p>
+                </div>
+                <div class="movie-actions">
+                    <button class="info-button" (click)="onMovieInfo(movie.id)">INFO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

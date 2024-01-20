@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    display: flex;
+    font-family: "Roboto", sans-serif;
+  
+    background-color: rgba(8, 8, 8, 0.89);
+  }
+  
+  .right.carousel-control, .left.carousel-control {
+    opacity: 0;
+    filter:alpha(opacity=0); /* IE support */
+}
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    min-height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    align-self: center;
+  }
+
+  .main {
+    width: 100%;
+    background-size: cover;
+    align-items: center;
+    overflow-x: hidden;
+    justify-content: center;
+    display: flex;
+    background-position: center;
+    min-height: 710px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+  }
+  
+  .area {
+    color: white;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 70px;
+  }
+  
+  .area h2 {
+    font-size: 40px;
+    word-spacing: 15px;
+    line-height: 75px;
+  }
+  
+  .area h3 {
+    margin-top: -30px;
+    font-size: 27px;
+    font-weight: normal;
+  }
+  
+  
+  .example-button-row button,
+    .example-button-row a {
+    margin-right: 8px;
+    }
+///////////////////////////////////////////////////////////////
+
+.logo-image {
+  max-height: 50px; /* Set the maximum height of the logo */
+}
+.opening-page {
+  font-family: "Roboto", sans-serif;
+  background-color: #f8f8f8;
+}
+
+header {
+  background-color: #ffd740;
+  color: #fff;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #fff;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-item {
+  margin-right: 1rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #fff;
+}
+
+.custom-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 450px; 
+  width: 450px;
+}
+
+.carousel-image-container {
+  text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-image {
+  width: 300px;
+  height: 450px;
+}
+
+.cinema-info {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cinema-info h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.cinema-info p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+}

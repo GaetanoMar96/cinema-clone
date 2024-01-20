@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="movie-card">
+    <div class="card_left">
+      <div class="card_details">
+        <h1>{{selectedMovie.title}}</h1>
+        <div class="card_category">
+          <!--<p class="PG">{{selectedMovie.}}</p>-->
+          <p class="year">{{selectedMovie.release_date}}</p>
+          <!--get list of genres
+          <p class="genre">{{selectedMovie.genre}}</p>-->
+          <p class="time">{{selectedMovie.runtime}}</p>
+        </div>
+        <p class="plot">{{selectedMovie.overview}}</p>
+        <p class="show">Available shows:</p>
+        <span *ngFor="let show of shows">  
+          <button class="ticket-button" (click)="getTicket(show)">
+            {{show.startDate}} {{show.startTime}}
+          </button>
+      </span>
+      </div>
+    </div>
+    <div class="card_right">
+      <div>
+        <img src="{{'http://image.tmdb.org/t/p/original/' + selectedMovie.poster_path}}">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="theater">
+    <div class="movie-details">
+        <h2>{{title}}</h2>
+        <div>{{hallName}} - {{dateTime}}</div>
+    </div>
+
+    <!-- Showing a static legend bar -->
+    <ul class="showcase">
+        <li>
+            <div class="seat" style="background-color: #dbd6d6;"></div>
+            <small>Available</small>
+        </li>
+        <li>
+            <div class="seat selected"></div>
+            <small>Selected</small>
+        </li>
+        <li>
+            <div class="seat reserved"></div>
+            <small>Occupied</small>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="screen"></div>
+        <div class="seating-grid">
+            <div *ngFor="let row of rows" class="row">
+                <div *ngFor="let col of cols" class="seat"  
+                [ngSwitch]="getStatus(row + col)">
+                <span class="seat-label">{{row}}{{col}}</span>
+                <span *ngSwitchCase="'reserved'" class="seat reserved"></span>
+                <span *ngSwitchCase="'selected'" class="seat selected" (click)="clearSelectedSeat(row + col)"></span>
+                <span *ngSwitchDefault class="seat available" (click)="seatClicked(row + col)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="seatsEmpty()" class="ticket-button" (click)="reserveTickets()" >
+        Purchase
+    </button>
+</div>

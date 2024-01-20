@@ -1,0 +1,46 @@
+<div class="opening-page">
+  <header>
+    <nav class="navbar">
+      <a class="navbar-brand">
+        <img src="assets/cinema-logo.jpg" alt="Cinema Logo" class="logo-image">
+        CinemaX
+      </a>
+      <ul class="nav">
+        <button mat-fab extended color="warn">
+          <mat-icon>theaters</mat-icon>
+          <a class="nav-link active" routerLink="/cinema">Now playing</a>
+          </button>
+        <button mat-fab extended color="warn">
+          <mat-icon>theaters</mat-icon>
+          <a class="nav-link active" routerLink="/cinema/upcoming">Upcoming movies</a>
+          </button>
+      </ul>
+    </nav>
+  </header>
+  <div class="main">
+  <div class="carousel-container">
+      <ngb-carousel *ngIf="movies" class="custom-carousel">
+        <ng-template ngbSlide *ngFor="let movie of movies">
+          <div class="carousel-image-container">
+            <img src="{{'http://image.tmdb.org/t/p/original/' + movie.poster_path}}" alt="Movie Poster" class="carousel-image">
+          </div>
+        </ng-template>
+      </ngb-carousel>
+  </div>
+</div>
+  <section class="cinema-info">
+    <h2>Welcome to CinemaX</h2>
+    <p>Your ultimate movie destination for the best cinematic experience. Enjoy the latest blockbusters in state-of-the-art theaters.</p>
+  </section>
+</div>
+
+      
+    
+
+
+
+
+
+
+
+

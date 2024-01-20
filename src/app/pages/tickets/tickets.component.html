@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Your Purchased Tickets</h1>
+    <span><h3>Here there are the latest tickets you bought</h3></span>
+
+    <mat-divider class="divider" [inset]="true"></mat-divider>
+    <mat-grid-list cols="2" rowHeight="2:1">
+    <div *ngIf="tickets.length > 0">
+        <div class="row">
+        <mat-grid-tile class="col-6" *ngFor="let ticket of tickets;let i = index">
+                
+                <div class="cardWrap">
+                    <div class="card cardLeft">
+                        <h1><span>CinemaX</span></h1>
+                        <div class="title">
+                            <h2><span>Movie: </span>{{ticket.movie}}</h2>
+                        </div>
+                        <div class="seat">
+                            <h2><span>Cost: </span>{{ticket.cost}}</h2>
+                        </div>
+                        <div class="time">
+                            <h2><span>Show: </span>{{ticket.startDate}} - {{ticket.startTime}}</h2>
+                        </div>
+
+                    </div>
+                    <div class="card cardRight">
+                        <div class="number">
+                            <span>seat</span>
+                            <h3>{{ticket.seat}}</h3>
+                        </div>
+                        <div class="barcode"></div>
+                    </div>
+                </div>
+            </mat-grid-tile>
+            </div>
+    </div>
+    </mat-grid-list>
+    <button mat-fab extended
+            [disabled]="tickets.length == 0" class="ticket-button" (click)="onDeleteTicket()">   
+            Delete tickets     
+    </button>
+    <!--<button mat-fab extended
+            [disabled]="tickets.length == 0" class="ticket-button" (click)="onSendEmail()">   
+            Send tickets via email     
+    </button>-->
+</div>
+        
+  

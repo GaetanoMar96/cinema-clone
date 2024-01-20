@@ -1,0 +1,105 @@
+.wrapper {
+	display: flex;
+    flex-wrap: wrap;
+    padding: 20px; /* Add some padding to the grid */
+    border-radius: 10px; /* Add rounded corners to the background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the background */
+	background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+      url(https://assets.nflxext.com/ffe/siteui/vlv3/a1dc92ca-091d-4ca9-a05b-8cd44bbfce6a/f9368347-e982-4856-a5a4-396796381f28/RS-en-20191230-popsignuptwoweeks-perspective_alpha_website_large.jpg);
+	background-size: cover;
+}
+
+.movie-card {
+	background-color: rgb(243, 240, 240);
+	width: 760px;
+	height: 390px;
+	margin: 50px auto;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	max-width: 770px;
+	border-radius: 10px;
+    transition: all 0.4s;
+    //box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
+	//&:hover{
+	//	transform: scale(1.02);
+	//	box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
+	//	transition: all 0.4s;
+	//}
+}
+
+.card_left {
+	width: 90%;
+}
+
+.card_details {
+	width: 90%;
+	padding: 30px;
+	margin-top: -25px;
+	h1 {
+		position: relative;
+		color: black;
+		font-size: 30px;
+		margin-top: 20px;
+		font-weight: 400;
+	}
+	.card_category {
+		width: 100%;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-pack: justify;
+		-ms-flex-pack: justify;
+		justify-content: space-between;
+		.PG, .year, .genre, .time {
+			color: black;
+			padding: 10px;
+			font-weight: bold;
+			border-radius: 15px;
+		}
+	}
+	.plot {
+		color: black;
+		font-weight: 100;
+		line-height: 20px;
+	}
+	.show {
+		color: black;
+		font-weight: 500;
+	}
+}
+
+.card_right {
+	border-radius: 2px;
+	img {
+		height: 390px;
+		border-radius: 2px;
+	}
+}
+
+.ticket-button {
+	color: black;
+	border: none;
+	padding: 20px;
+	width: 110px;
+	outline: none;
+	font-size: 12px;
+	font-weight: bold;
+	margin-top: 10px;
+	margin-left: 10px;
+	background: #ffd740;
+	border-radius: 12px;
+	-webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	box-shadow: 0 0 20px rgba(0,0,0,0.2);
+	-webkit-transition: 300ms ease-in-out;
+	-o-transition: 200ms ease-in-out;
+	transition: 200ms ease-in-out;
+	&:hover {
+		-webkit-transform: scale(1.1);
+		-ms-transform: scale(1.1);
+		transform: scale(1.1);
+		background-color: #eb8e23;
+	}
+}
+
+
