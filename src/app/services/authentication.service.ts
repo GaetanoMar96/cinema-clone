@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
 import { RegisterRequest, AuthenticationRequest, AuthenticationResponse, PasswordRequest } from "./../models/index";
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from "firebase/auth";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -14,41 +15,61 @@ export class AuthenticationService {
 
     constructor(
         private router: Router,
-        private http: HttpClient) {
+        private http: HttpClient,
+        private afAuth: AngularFireAuth) {
         this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
         this.user = this.userSubject.asObservable();
+
+        // Subscribe to Firebase Auth state changes
+        this.afAuth.authState.subscribe((user) => {
+            if (user) {
+            user.getIdToken().then((token) => {
+                const userData: AuthenticationResponse = { userId: user.uid, accessToken: token };
+                this.userSubject.next(userData);
+                localStorage.setItem('user', JSON.stringify(userData));
+            });
+            } else {
+                this.userSubject.next(null);
+                localStorage.removeItem('user');
+            }
+        });
     }
 
     public get userValue() {
         return this.userSubject.value;
     }
 
-    register(request: RegisterRequest): Observable<AuthenticationResponse> {
-        return this.http.post(`${environment.apiUrl}/${ApiPaths.Auth}/register`, request);
+    /*Adding firebase authentication*/
+    async register(request: RegisterRequest): Promise<void> {
+        try {
+            await this.afAuth.createUserWithEmailAndPassword(
+                request.email, 
+                request.password
+            );            
+        } catch (error) {
+            throw error; // Handle registration failure
+        }
     }
 
-    login(request: AuthenticationRequest): Observable<AuthenticationResponse> {
-        return this.http.post<AuthenticationResponse>(
-            `${environment.apiUrl}/${ApiPaths.Auth}/authenticate`, 
-            request)
-            .pipe(map(response => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('user', JSON.stringify(response));
-                this.userSubject.next(response);
-                return response;
-            }));
+    async login(request: AuthenticationRequest): Promise<void> {
+        try {
+            await this.afAuth.signInWithEmailAndPassword(
+                request.email, 
+                request.password
+            );
+        } catch (error) {
+            console.error('Login error:', error);
+            throw error; // Handle login failure
+        }
     }
 
-    logout(): void {
-        // remove user from session context
-        this.http.post<any>(
-            `${environment.apiUrl}/${ApiPaths.Auth}/logout`, "")
-
-        // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-        // redirect to login page
-        this.router.navigate(['/auth/login']);
+    async logout(): Promise<void> {
+        try {
+            await this.afAuth.signOut();
+            this.router.navigate(['/login']);
+        } catch (error) {
+            throw error; 
+        }
     }
 
     changePwd(oldPassword: string, newPassword: string): void {

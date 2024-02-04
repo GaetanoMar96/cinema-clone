@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
@@ -54,19 +54,14 @@ export class RegistrationComponent implements OnInit {
     this.loading = true;
 
     const request: RegisterRequest = this.getRequest();
-    this.authenticationService
-      .register(request)
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          // valid registration navigate to log in form
-          this.router.navigate(['/auth/login']);
-        },
-        error: (error) => {
-          console.log(error);
-          this.loading = false;
-        },
-      });
+    try {
+      await this.authenticationService.register(request);
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   private getRequest(): RegisterRequest {

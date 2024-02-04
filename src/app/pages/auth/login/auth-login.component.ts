@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
 
     if (this.form.invalid) {
@@ -47,19 +47,15 @@ export class LoginComponent implements OnInit {
       password: this.f.password.value,
     };
 
-    this.authenticationService
-      .login(request)
-      .pipe(take(1))
-      .subscribe({
-        next: () => {
-          // valid registration navigate to home page
-          this.router.navigateByUrl('home');
-        },
-        error: (error) => {
-          console.log(error);
-          this.loading = false;
-        },
+    try {
+      await this.authenticationService.login(request).then(() => {
+        this.router.navigate(['home']);
       });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      this.loading = false;
+    }
   }
 
   goToRegister() {

@@ -1,4 +1,3 @@
-export * from './movies/movies.component'
 export * from './header/header.component'
 export * from './auth/login/auth-login.component';
 export * from './auth/register/auth-register.component';

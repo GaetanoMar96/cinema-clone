@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { CinemaService, AuthenticationService } from './../../services/index';
 import { Movie } from './../../models/index';
-import { Subject } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -14,15 +14,16 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   
   movies: Movie[] = [];
 
-  private destroy$ = new Subject<void>(); // Subject for unsubscribing
+  private moviesSubscription = new Subscription();
 
   constructor(private cinemaService: CinemaService, 
     private authenticationService: AuthenticationService,
     private router: Router) {}
 
   ngOnInit() {
-    this.movies = this.cinemaService.getAllMovies();
-    
+    this.moviesSubscription = this.cinemaService.getAvailableMovies().subscribe(
+      (movies: Movie[]) => this.movies = movies
+    );
   }
 
   onMovieInfo(movieId: number | undefined) {
@@ -45,7 +46,6 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
 
     if (movieId) {
       this.cinemaService.getMovieInfo(movieId.toLocaleString())
-      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (movieInfo) => {
           this.goToMovieCard(movieInfo);
@@ -56,7 +56,7 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   goToMovieCard(movieInfo: Movie): void {
-    this.cinemaService.selectedMovie$
+    /*this.cinemaService.selectedMovie$
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       movie => {
@@ -66,11 +66,12 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
         }
       }
     );
-    this.router.navigate(['/cinema/movie-card']);
+    this.router.navigate(['/cinema/movie-card']);*/
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    if (this.moviesSubscription) {
+      this.moviesSubscription.unsubscribe();
+    }
   }
 }

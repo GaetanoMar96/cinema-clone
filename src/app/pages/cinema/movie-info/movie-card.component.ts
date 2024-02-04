@@ -32,14 +32,15 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     
     if (this.selectedMovie.title) {
       this.movieTitle = this.selectedMovie.title;
-      this.shows = this.cinemaService.getAllShowsForMovie(this.movieTitle);        
+      this.cinemaService.getAllShowsForMovie(1).subscribe(
+        (shows: any) => this.shows = shows
+      );     //TODO  
     }
   }
 
   getTicket(show: Show): void {
-    if (show.startDate && show.startTime) {
       //force startTime
-      const startTime = show.startTime.substring(0, show.startTime.length - 3)
+      /*const startTime = show.startTime.substring(0, show.startTime.length - 3)
       
       //store the chosen show
       this.cinemaService.selectedShowSubject.next(show);
@@ -51,12 +52,11 @@ export class MovieCardComponent implements OnInit, OnDestroy {
           this.router.navigate(['/cinema/hall'])
         },
         error: (error) => console.log(error),
-      });
-    }
+      });*/
   }
+  
 
   ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    
   }
 }

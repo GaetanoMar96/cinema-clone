@@ -2,20 +2,18 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, ReplaySubject  } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
 import { ApiPaths } from './../helpers/api-paths';
 import { Movie, Show, Seat, MovieDetail } from './../models/index';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
 
   movieName: string = 'Movie';
-  private movies: Movie[] = [];
   upcomingMovies: Movie[] = [];
-  private shows: Show[] = [];
 
   //Subjects
   selectedMovieSubject = new BehaviorSubject<MovieDetail>({});
@@ -35,35 +33,34 @@ export class CinemaService {
 
   }
 
-  getAllMovies(): Movie[] {
-    if (this.movies && this.movies.length > 0) {
-      return this.movies.slice();
-    } else {
-      this.getAvailableMoviesList();
-      return this.movies;
-    }
-  }
-
-  getAvailableMoviesList(): void {
-    this.http
-      .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}/now_playing`)
-      .subscribe({
-        next: (movies: Movie[]) => {
-          console.log('movies get from api success');
-          movies.forEach((movie) => this.movies.push(movie));
-        },
-        error: (error) => console.log(error),
-      });
+  getAvailableMovies(): Observable<Movie[]> {
+    return this.moviesCollection.snapshotChanges()
+        .pipe(
+          first(),
+          map(actions => actions.map(a => a.payload.doc.data() as Movie))
+        );
+    
   }
 
   getMovieInfo(movieId: string): Observable<MovieDetail> {
-    return this.http.get<MovieDetail>(
-      `${environment.apiUrl}/${ApiPaths.Movies}/movie/${movieId}`
+    return this.http.get(`${environment.apiUrl}/${movieId}`)
+    .pipe(
+      map((data: any) => {
+        return {
+          id: data.id,
+          title: data.title,
+          overview: data.overview,
+          release_date: data.release_date,
+          vote_average: data.vote_average,
+          poster_path: data.poster_path
+        } as MovieDetail;
+      })
     );
   }
 
   getUpcomingMovies(): void {
-    this.http
+    //implement call to movie db api
+    /*this.http
       .get<Movie[]>(`${environment.apiUrl}/${ApiPaths.Movies}/upcoming`)
       .subscribe({
         next: (movies: Movie[]) => {
@@ -71,36 +68,22 @@ export class CinemaService {
           movies.forEach((movie) => this.upcomingMovies.push(movie));
         },
         error: (error) => console.log(error),
-      });
+      });*/
   }
 
-  getAllShowsForMovie(movie: string): Show[] {
-    if (this.movieName === movie && this.shows.length > 0) {
-      return this.shows.slice();
-    } else {
-      this.shows = [];
-    }
-    
-    this.http
-      .get<Show[]>(`${environment.apiUrl}/${ApiPaths.Theaters}/${movie}/shows`)
-      .subscribe({
-        next: (shows: Show[]) => {
-          shows.forEach((show) => this.shows.push(show));
-        },
-        error: (error) => console.log(error),
-      });
-    return this.shows;
+  getAllShowsForMovie(movieId: number): Observable<Show[]> {
+    return this.angularFirestore.collection<Show>(
+      'shows', (ref) => ref.where('movieId', '==', movieId)
+    ).valueChanges();
   }
 
   getAllSeatsForMovie(
-    movie: string,
+    movieId: number,
     date: string,
     time: string
-  ): Observable<Seat> {
-    return this.http.get<Seat>(`${environment.apiUrl}/${ApiPaths.Theaters}/${movie}/seats/${date}/${time}`);
-  }
-
-  pushMoviesIntoFirestore() {
-    
+  ): Observable<Seat[]> {
+    return this.angularFirestore.collection<Seat>(
+      'hall', (ref) => ref.where('movieId', '==', movieId)
+    ).valueChanges();
   }
 }

@@ -82,7 +82,7 @@ export class HallComponent implements OnInit, OnDestroy {
         }
 
         if (this.show) {
-            this.dateTime = this.show.startDate + '-' + this.show.startTime;
+            this.dateTime = this.show.movieShows[0].startDate;
         }
 
         this.transaction = this.dialogService.transaction.subscribe(
@@ -122,8 +122,8 @@ export class HallComponent implements OnInit, OnDestroy {
 
     reserveTickets(): void {
         let totalPrice = 0;
-        if (this.seat && this.seat.baseCost)
-            totalPrice = this.selected.length * this.seat.baseCost;
+        if (this.seat && this.seat.cost)
+            totalPrice = this.selected.length * this.seat.cost;
         
         this.ticketInfo = {
             userId: this.userId,
@@ -162,11 +162,11 @@ export class HallComponent implements OnInit, OnDestroy {
             for(let i = 0; i < ticketInfo.seats?.length; i++) {
                 let ticket: Ticket = {
                     movie: this.movie.title,
-                    startDate: this.show.startDate,
-                    startTime: this.show.startTime,
+                    startDate: this.show.movieShows[0].startDate,
+                    startTime: 'TODO',
                     hallName: this.hallName,
                     seat: ticketInfo.seats[i],
-                    cost: this.seat.baseCost
+                    cost: this.seat.cost
                 }
                 this.ticketService.tickets.push(ticket);
             }

@@ -1,4 +1,8 @@
 export interface Show { 
-    startDate?: string;
-    startTime?: string;
+    moviedId: string;
+    movieShows: Array<ShowDate>;
+}
+
+export interface ShowDate {
+    startDate: string;
 }

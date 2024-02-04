@@ -1,5 +1,7 @@
 export interface Seat { 
     hallName?: string;
-    baseCost?: number;
+    cost?: number;
     availableSeats?: Array<string>;
+    moviedId: string;
+    seats: number;
 }
