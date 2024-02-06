@@ -16,6 +16,20 @@ export class AuthInterceptorService implements HttpInterceptor {
               if (user === null || user === undefined) {
                 return next.handle(request);
               }
+
+              const isStripeRequest = request.url.startsWith('https://api.stripe.com/');
+
+              if (isStripeRequest) {
+                return next.handle(request);
+              }
+
+              const ismovieDbRequest = request.url.startsWith('https://api.themoviedb.org/3/movie');
+
+              if (ismovieDbRequest) {
+                return next.handle(request);
+              }
+
+
               const modifiedRequest = request.clone({
                 setHeaders: {
                     'Authorization': `Bearer ${user.accessToken}`

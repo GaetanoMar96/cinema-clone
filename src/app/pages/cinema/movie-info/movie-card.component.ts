@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { MovieDetail, Show, Seat } from './../../../models/index';
+import { Movie, Show, ShowDate } from './../../../models/index';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -12,8 +12,8 @@ import { CinemaService } from './../../../services/index';
 })
 export class MovieCardComponent implements OnInit, OnDestroy {
   
-  selectedMovie: MovieDetail;
-  shows: Show[] = [];
+  selectedMovie: Movie;
+  show: Show;
   movieTitle: string;
 
   private destroy$ = new Subject<void>();
@@ -32,13 +32,16 @@ export class MovieCardComponent implements OnInit, OnDestroy {
     
     if (this.selectedMovie.title) {
       this.movieTitle = this.selectedMovie.title;
-      this.cinemaService.getAllShowsForMovie(1).subscribe(
-        (shows: any) => this.shows = shows
-      );     //TODO  
+      this.cinemaService.getAllShowsForMovie(this.selectedMovie.id)
+      .subscribe(
+        (show: any) => {
+          this.show = show
+        }
+      );     
     }
   }
 
-  getTicket(show: Show): void {
+  getTicket(show: ShowDate): void {
       //force startTime
       /*const startTime = show.startTime.substring(0, show.startTime.length - 3)
       

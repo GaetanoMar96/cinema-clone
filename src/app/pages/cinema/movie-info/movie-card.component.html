@@ -7,15 +7,15 @@
           <!--<p class="PG">{{selectedMovie.}}</p>-->
           <p class="year">{{selectedMovie.release_date}}</p>
           <!--get list of genres
-          <p class="genre">{{selectedMovie.genre}}</p>-->
-          <p class="time">{{selectedMovie.runtime}}</p>
+          <p class="genre">{{selectedMovie.genre}}</p>
+          <p class="time">{{selectedMovie.runtime}}</p>-->
         </div>
         <p class="plot">{{selectedMovie.overview}}</p>
         <p class="show">Available shows:</p>
-        <span *ngFor="let show of shows">  
-          <!--<button class="ticket-button" (click)="getTicket(show)">
-            {{show.startDate}} {{show.startTime}}
-          </button>-->
+        <span *ngFor="let s of show.movieShows">  
+          <button class="ticket-button" (click)="getTicket(s)">
+            {{s.startDate}}
+          </button>
       </span>
       </div>
     </div>

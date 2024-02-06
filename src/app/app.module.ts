@@ -5,9 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from "@angular/fire/compat/auth";
 import { AppComponent } from './app.component';
-import { HeaderComponent, RegistrationComponent, LoginComponent
-  ,LayoutComponent, HomeComponent, CinemaMoviesComponent, HallComponent,
-   MovieCardComponent, AccountComponent, PaymentDialogComponent, TicketsComponent, UpcomingMoviesComponent } from './pages/index';
+import { HeaderComponent, 
+  RegistrationComponent, 
+  LoginComponent
+  ,HomeComponent, 
+  CinemaMoviesComponent, 
+  HallComponent,
+  MovieCardComponent, 
+  AccountComponent, 
+  PaymentDialogComponent, 
+  TicketsComponent, 
+  UpcomingMoviesComponent } from './pages/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,7 +41,6 @@ import { firebaseConfig } from './environments/env-firebase';
     HeaderComponent,
     RegistrationComponent,
     LoginComponent,
-    LayoutComponent,
     HomeComponent,
     CinemaMoviesComponent,
     HallComponent,

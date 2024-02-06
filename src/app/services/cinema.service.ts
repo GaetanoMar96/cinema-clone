@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, ReplaySubject  } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
 import { environment } from './../environments/environment';
-import { ApiPaths } from './../helpers/api-paths';
+import { movieDbApi } from './../environments/env-firebase';
 import { Movie, Show, Seat, MovieDetail } from './../models/index';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction } from '@angular/fire/compat/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class CinemaService {
+  headers = new HttpHeaders({
+    'Authorization': `Bearer ${movieDbApi.token}`,
+  });
 
   movieName: string = 'Movie';
   upcomingMovies: Movie[] = [];
 
   //Subjects
-  selectedMovieSubject = new BehaviorSubject<MovieDetail>({});
+  selectedMovieSubject = new ReplaySubject<Movie>();
   selectedShowSubject = new ReplaySubject<Show>();
   selectedSeatSubject = new ReplaySubject<Seat>();
   
@@ -42,8 +45,8 @@ export class CinemaService {
     
   }
 
-  getMovieInfo(movieId: string): Observable<MovieDetail> {
-    return this.http.get(`${environment.apiUrl}/${movieId}`)
+  getMovieInfo(movieId: number): Observable<Movie> {
+    return this.http.get(`${environment.movieDbUrl}/${movieId}`, { headers: this.headers })
     .pipe(
       map((data: any) => {
         return {
@@ -53,7 +56,7 @@ export class CinemaService {
           release_date: data.release_date,
           vote_average: data.vote_average,
           poster_path: data.poster_path
-        } as MovieDetail;
+        } as Movie;
       })
     );
   }
@@ -71,10 +74,19 @@ export class CinemaService {
       });*/
   }
 
-  getAllShowsForMovie(movieId: number): Observable<Show[]> {
+  getAllShowsForMovie(movieId: number): Observable<Show> {
     return this.angularFirestore.collection<Show>(
       'shows', (ref) => ref.where('movieId', '==', movieId)
-    ).valueChanges();
+    ).valueChanges()
+    .pipe(
+      map((data: any) => {
+        console.log(data)
+        return {
+          movieId: data[0].movieId,
+          movieShows: data[0].movieShows
+        } as Show
+      })
+      );
   }
 
   getAllSeatsForMovie(

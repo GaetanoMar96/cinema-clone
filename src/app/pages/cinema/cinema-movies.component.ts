@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { CinemaService, AuthenticationService } from './../../services/index';
-import { Movie } from './../../models/index';
+import { Movie, MovieDetail } from './../../models/index';
 import { Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -27,25 +27,8 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   onMovieInfo(movieId: number | undefined) {
-
-    //if user is not logged in
-    if (this.authenticationService.userValue === undefined) {
-      console.log("Not logged in");
-      this.router.navigate(['/auth/login']);
-    }
-
-    let movieInfo: Movie | undefined;
-
-    if (this.movies.length > 0) {
-      movieInfo = this.movies.filter((m) => m.id === movieId)[0];
-    }
-
-    if (movieInfo !== undefined) {
-      this.goToMovieCard(movieInfo);
-    }
-
     if (movieId) {
-      this.cinemaService.getMovieInfo(movieId.toLocaleString())
+      this.cinemaService.getMovieInfo(movieId)
       .subscribe({
         next: (movieInfo) => {
           this.goToMovieCard(movieInfo);
@@ -56,17 +39,8 @@ export class CinemaMoviesComponent implements OnInit, OnDestroy {
   }
 
   goToMovieCard(movieInfo: Movie): void {
-    /*this.cinemaService.selectedMovie$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      movie => {
-        if (movie !== movieInfo) {
-          //store movie only if different from previous one
-          this.cinemaService.selectedMovieSubject.next(movieInfo);
-        }
-      }
-    );
-    this.router.navigate(['/cinema/movie-card']);*/
+    this.cinemaService.selectedMovieSubject.next(movieInfo);
+    this.router.navigate(['/cinema/movie-card']);
   }
 
   ngOnDestroy(): void {
