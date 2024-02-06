@@ -1,5 +1,6 @@
 export interface Show { 
-    movieId: string;
+    movieId: number;
+    showId: number;
     movieShows: Array<ShowDate>;
 }
 

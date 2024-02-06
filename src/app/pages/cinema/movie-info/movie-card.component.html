@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div *ngIf="selectedMovie != undefined" class="wrapper">
   <div class="movie-card">
     <div class="card_left">
       <div class="card_details">
@@ -13,7 +13,7 @@
         <p class="plot">{{selectedMovie.overview}}</p>
         <p class="show">Available shows:</p>
         <span *ngFor="let s of show.movieShows">  
-          <button class="ticket-button" (click)="getTicket(s)">
+          <button class="ticket-button" (click)="getTicket(show)">
             {{s.startDate}}
           </button>
       </span>

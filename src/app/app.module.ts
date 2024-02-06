@@ -34,6 +34,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatBadgeModule} from '@angular/material/badge';
 import { firebaseConfig } from './environments/env-firebase';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { firebaseConfig } from './environments/env-firebase';
     MatDividerModule,
     MatDialogModule,
     MatBadgeModule,
+    NgbModule,
     AngularFireModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),

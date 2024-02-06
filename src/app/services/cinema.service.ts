@@ -80,22 +80,33 @@ export class CinemaService {
     ).valueChanges()
     .pipe(
       map((data: any) => {
-        console.log(data)
         return {
           movieId: data[0].movieId,
+          showId: data[0].showId,
           movieShows: data[0].movieShows
         } as Show
       })
-      );
+    );
   }
 
   getAllSeatsForMovie(
     movieId: number,
-    date: string,
-    time: string
-  ): Observable<Seat[]> {
+    showId: number,
+  ): Observable<Seat> {
     return this.angularFirestore.collection<Seat>(
       'hall', (ref) => ref.where('movieId', '==', movieId)
-    ).valueChanges();
+      .where('showId', '==', showId)
+    ).valueChanges()
+    .pipe(
+      map((hall: any) => {
+        return {
+          hallName: hall[0].hallName,
+          cost: hall[0].cost,
+          availableSeats: hall[0].availableSeats,
+          moviedId: hall[0].moviedId,
+          seats: hall[0].seats
+        } as Seat
+      })
+    );
   }
 }

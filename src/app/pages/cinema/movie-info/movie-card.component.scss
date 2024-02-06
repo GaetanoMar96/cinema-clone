@@ -11,8 +11,8 @@
 
 .movie-card {
 	background-color: rgb(243, 240, 240);
-	width: 760px;
-	height: 390px;
+	width: 860px;
+	height: 500px;
 	margin: 50px auto;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -20,12 +20,6 @@
 	max-width: 770px;
 	border-radius: 10px;
     transition: all 0.4s;
-    //box-shadow: 0px 0px 80px -25px rgba(0,0,0, 0.5);
-	//&:hover{
-	//	transform: scale(1.02);
-	//	box-shadow: 0px 0px 60px -25px rgba(0,0,0, 0.5);
-	//	transition: all 0.4s;
-	//}
 }
 
 .card_left {
@@ -72,7 +66,7 @@
 .card_right {
 	border-radius: 2px;
 	img {
-		height: 390px;
+		height: 500px;
 		border-radius: 2px;
 	}
 }
